@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22a64d1c-89d8-405f-bfb4-061993cfc1a2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ActionGame/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ActionGame/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ActionGame/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ActionGame/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Runtime/Scenes/ActionGame.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Runtime/Scenes/ActionGame.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Runtime/Scripts/Extensions/VectorExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Runtime/Scripts/Extensions/VectorExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ActionGame/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ActionGame/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Runtime/Scripts/ActionGame/Player/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Runtime/Scripts/ActionGame/Player/CameraController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
     </list>
@@ -112,7 +108,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1707877593613</updated>
-      <workItem from="1707877596263" duration="7374000" />
+      <workItem from="1707877596263" duration="8183000" />
     </task>
     <servers />
   </component>
