@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Project.Extensions
 {
+    /// <summary>
+    /// Vector2、Vector3拡張
+    /// </summary>
     public static class VectorExtensions
     {
         public static Vector3 SetX(this Vector3 vector, float value)
