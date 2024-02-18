@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Project.System
 {
@@ -12,6 +13,8 @@ namespace Project.System
     {
         public T LoadAsset<T>(string path) where T : Object;
         public UniTask<T> LoadAssetAsync<T>(string path) where T : Object;
-        public void ReleaseAsset(List<string> pathList);
+        public UniTask<Scene> LoadSceneAsync(string path);
+        public bool ReleaseAsset(string path);
+        public void ReleaseAssetList(List<string> pathList);
     }
 }

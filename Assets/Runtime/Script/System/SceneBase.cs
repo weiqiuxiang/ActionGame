@@ -11,6 +11,8 @@ namespace Project
     /// </summary>
     public abstract class SceneBase : MonoBehaviour
     {
+        protected object data;
+        public object Data => data;
         public SceneAssetLoader AssetLoader { get; private set; }
 
         /// <summary>
@@ -19,17 +21,27 @@ namespace Project
         /// <param name="loader">アセットLoader</param>
         /// <param name="sceneData">シーンデータ</param>
         /// <returns></returns>
-        public virtual UniTask Initialize(IAssetsLoader loader, object sceneData = null)
+        public virtual UniTask Prepare(IAssetsLoader loader, object sceneData = null)
         {
             AssetLoader = new SceneAssetLoader(loader);
+            data = sceneData;
             return UniTask.CompletedTask;
         }
+        
+        public virtual UniTask Initialize() => UniTask.CompletedTask;
 
         /// <summary>
         /// 次のシーンから戻った時
         /// </summary>
-        /// <param name="sceneData">シーンデータ</param>
         /// <returns></returns>
-        public virtual UniTask BackFromNext(object sceneData = null) => UniTask.CompletedTask;
+        public virtual UniTask BackFromNext()
+        {
+            return UniTask.CompletedTask;
+        }
+
+        public virtual void Release()
+        {
+            AssetLoader.Release();
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Project.System
     /// シーンで、アセットをロード、解放する機能
     /// シーンはいらない際に、Releaseメソッドでシーン用アセットを解放できる
     /// </summary>
-    public class SceneAssetLoader : IAssetsLoader
+    public class SceneAssetLoader
     {
         private IAssetsLoader loader;
         private readonly List<string> loadedAssetKeyList;
@@ -36,7 +36,7 @@ namespace Project.System
         /// ロード済みのアセットを解放、SceneAssetLoaderでロードしていないアセットは解放されない
         /// </summary>
         /// <param name="pathList"></param>
-        public void ReleaseAsset(List<string> pathList)
+        public void ReleaseAssetList(List<string> pathList)
         {
             List<string> containPathList = new List<string>();
             foreach (var path in pathList)
@@ -47,12 +47,12 @@ namespace Project.System
                     loadedAssetKeyList.Remove(path);
                 }
             }
-            loader.ReleaseAsset(containPathList);
+            loader.ReleaseAssetList(containPathList);
         }
 
         public void Release()
         {
-            ReleaseAsset(loadedAssetKeyList);
+            ReleaseAssetList(loadedAssetKeyList);
         }
     }
 }

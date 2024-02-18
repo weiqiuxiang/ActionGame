@@ -9,9 +9,9 @@ namespace Project.Title
 {
     public class TitleScene : SceneBase
     {
-        public override async UniTask Initialize(IAssetsLoader loader, object sceneData = null)
+        public override async UniTask Prepare(IAssetsLoader loader, object sceneData = null)
         {
-            await base.Initialize(loader, sceneData);
+            await base.Prepare(loader, sceneData);
         }
     }
 }
