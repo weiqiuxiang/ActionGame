@@ -2,23 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Project
+namespace Project.System
 {
     /// <summary>
     /// シーン遷移をコントロール
     /// </summary>
-    public class SceneTransitionController : MonoBehaviour
+    public class SceneTransitionController
     {
-        // Start is called before the first frame update
-        void Start()
-        {
         
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
     }
 }

@@ -19,16 +19,17 @@ namespace Project
         /// <param name="loader">アセットLoader</param>
         /// <param name="sceneData">シーンデータ</param>
         /// <returns></returns>
-        public virtual async UniTask Initialize(IAssetsLoader loader, object sceneData = null)
+        public virtual UniTask Initialize(IAssetsLoader loader, object sceneData = null)
         {
             AssetLoader = new SceneAssetLoader(loader);
+            return UniTask.CompletedTask;
         }
-        
+
         /// <summary>
         /// 次のシーンから戻った時
         /// </summary>
         /// <param name="sceneData">シーンデータ</param>
         /// <returns></returns>
-        public virtual async UniTask BackFromNext(object sceneData = null){}
+        public virtual UniTask BackFromNext(object sceneData = null) => UniTask.CompletedTask;
     }
 }
