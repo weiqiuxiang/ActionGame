@@ -3,11 +3,12 @@ namespace Project.Utilities
 {
     /// <summary>
     /// Sceneのenum
+    /// *SceneDefineSettingを見て自動生成
     /// </summary>
     public enum SceneDefine
     {
-		ActionGame,
+		Title,
 		StageSelect,
-		Title
+		ActionGame
     }
 }

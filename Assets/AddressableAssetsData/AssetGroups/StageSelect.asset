@@ -10,16 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Common
+  m_Name: StageSelect
   m_EditorClassIdentifier: 
-  m_GroupName: Common
+  m_GroupName: StageSelect
   m_Data:
     m_SerializedData: []
-  m_GUID: 75a2f1841e3c6a846994078bdfd65fff
-  m_SerializeEntries: []
+  m_GUID: 4bf1315a6c9d74244beb114fb2e00ae4
+  m_SerializeEntries:
+  - m_GUID: 9ed22e0e8eb6a97489d943713150d7e8
+    m_Address: StageSelect/StageSelect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8e0c6ac69b4bc0f49a6ac0efe55328c9, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 410b2cc2af03b394f96caf3f143d8e49, type: 2}
-    - {fileID: 11400000, guid: 0be4fc7a1b908e3478e4823a975e13c6, type: 2}
+    - {fileID: 11400000, guid: 0e6e26c86131ed24083674c59d4c3c3f, type: 2}
+    - {fileID: 11400000, guid: b41b6606d9577354e8c439b97c5884e2, type: 2}

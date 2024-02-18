@@ -24,18 +24,21 @@ namespace Project.Utilities
 {
     /// <summary>
     /// Sceneのenum
+    /// *SceneDefineSettingを見て自動生成
     /// </summary>
     public enum SceneDefine
     {
 ";
             // SceneDefineのenumの中身
-            var files = Directory.GetFiles(Path.Combine(Application.dataPath, @"Addressable\Scene"));
-            files = files.Where(file => !file.EndsWith(".meta")).ToArray(); // metaを含まない
-            for (int i = 0; i < files.Length; i++)
+            string path = "Assets/Editor/Utilities/SceneDefineSetting.asset";
+            var sceneDefineSetting = AssetDatabase.LoadAssetAtPath<SceneDefineSetting>(path);
+            if (sceneDefineSetting == null)
             {
-                files[i] = Path.GetFileNameWithoutExtension(files[i]);
+                UnityEngine.Debug.LogError($"SceneDefineSettingを見つからない、SceneDefine.csを作成できない、SceneDefineSettingのPath={path}");
+                return;
             }
-            foreach (var sceneName in files)
+            var sceneNames = sceneDefineSetting.SceneAssets.Select(scene => scene.name).ToArray();
+            foreach (var sceneName in sceneNames)
             {
                 script += $"\t\t{sceneName},\n";
             }
@@ -48,7 +51,7 @@ namespace Project.Utilities
 }
 ";
 
-            using (FileStream stream = File.OpenWrite(Path.Combine(Application.dataPath, @"Runtime\Script\Utilities\SceneDefine.cs")))
+            using (FileStream stream = File.OpenWrite(Path.Combine(Application.dataPath, "Runtime/Script/Utilities/SceneDefine.cs")))
             {
                 Byte[] info = new UTF8Encoding(true).GetBytes(script);
                 stream.Write(info, 0, info.Length);
