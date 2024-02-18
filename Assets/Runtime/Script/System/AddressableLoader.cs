@@ -64,7 +64,7 @@ namespace Project.System
 
         public async UniTask<Scene> LoadSceneAsync(string path)
         {
-            AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(path, LoadSceneMode.Additive, false);
+            AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(path, LoadSceneMode.Additive);
             await UniTask.WaitUntil(() => handle.IsDone);
             if (handle.Status == AsyncOperationStatus.Failed)
             {
