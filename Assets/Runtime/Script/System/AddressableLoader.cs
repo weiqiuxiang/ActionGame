@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using Cysharp.Threading.Tasks;
-using Project.System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.SceneManagement;
 
 namespace Project.System
 {
@@ -63,19 +62,48 @@ namespace Project.System
             return handle.Result;
         }
 
-        public void ReleaseAsset(List<string> pathList)
+        public async UniTask<Scene> LoadSceneAsync(string path)
+        {
+            AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(path, LoadSceneMode.Additive, false);
+            await UniTask.WaitUntil(() => handle.IsDone);
+            if (handle.Status == AsyncOperationStatus.Failed)
+            {
+                UnityEngine.Debug.LogError($"path={path}をロードできなかった");
+                return default;
+            }
+            
+            if (handles.ContainsKey(path))
+            {
+                handles[path].Add(handle);
+            }
+            else
+            {
+                handles.TryAdd(path, new List<AsyncOperationHandle>{handle});
+            }
+
+            return handle.Result.Scene;
+        }
+        
+        public bool ReleaseAsset(string path)
+        {
+            if (!handles.ContainsKey(path) || handles[path].Count == 0) return false;
+            Addressables.Release(handles[path][0]);
+            handles[path].RemoveAt(0);
+                
+            // 参照数が0
+            if (handles[path].Count == 0)
+            {
+                handles.TryRemove(path, out List<AsyncOperationHandle> list);
+            }
+
+            return true;
+        }
+
+        public void ReleaseAssetList(List<string> pathList)
         {
             foreach (var path in pathList)
             {
-                if (!handles.ContainsKey(path) || handles[path].Count == 0) continue;
-                Addressables.Release(handles[path][0]);
-                handles[path].RemoveAt(0);
-                
-                // 参照数が0
-                if (handles[path].Count == 0)
-                {
-                    handles.TryRemove(path, out List<AsyncOperationHandle> list);
-                }
+                ReleaseAsset(path);
             }
         }
     }
