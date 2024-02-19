@@ -17,7 +17,7 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 4bf1315a6c9d74244beb114fb2e00ae4
   m_SerializeEntries:
-  - m_GUID: 9ed22e0e8eb6a97489d943713150d7e8
+  - m_GUID: 55ebd1f24629b034eafed3a5afbce9f2
     m_Address: StageSelect/StageSelect
     m_ReadOnly: 0
     m_SerializedLabels: []
