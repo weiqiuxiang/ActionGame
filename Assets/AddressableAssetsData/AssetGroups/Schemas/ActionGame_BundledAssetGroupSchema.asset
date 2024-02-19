@@ -37,7 +37,7 @@ MonoBehaviour:
     m_Id: 2791d4395dff1aa479b715c3ee8bde8e
   m_LoadPath:
     m_Id: 50324773d553b3b469adb07fee488fec
-  m_BundleMode: 0
+  m_BundleMode: 1
   m_AssetBundleProviderType:
     m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
     m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider
