@@ -17,7 +17,8 @@ namespace Project
         public SceneTransitionController SceneTransitionController { get; private set; }
 
         /// <summary>
-        /// 初期化
+        /// 準備
+        /// *シーンに入った直後、一回のみ呼び出す処理
         /// </summary>
         /// <param name="loader">アセットLoader</param>
         /// <param name="sceneTransitionController"></param>
@@ -31,6 +32,11 @@ namespace Project
             return UniTask.CompletedTask;
         }
         
+        /// <summary>
+        /// 初期化
+        /// *シーンの初期化や全体更新する際に呼び出す
+        /// </summary>
+        /// <returns></returns>
         public virtual UniTask Initialize() => UniTask.CompletedTask;
 
         /// <summary>

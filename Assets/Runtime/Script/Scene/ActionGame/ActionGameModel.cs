@@ -1,11 +1,11 @@
 namespace Project
 {
     /// <summary>
-    /// Titleのmodel
+    /// ActionGameのmodel
     /// </summary>
-    public class TitleModel
+    public class ActionGameModel
     {
-        public TitleModel()
+        public ActionGameModel()
         {
             
         }

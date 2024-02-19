@@ -57,7 +57,7 @@ namespace Project.System
             }
             
             UnloadCurrentScene();
-            SceneManager.UnloadSceneAsync(currentScene);
+            await SceneManager.UnloadSceneAsync(currentScene);
 
             // シーン初期化
             currentScene = result.scene;
@@ -90,7 +90,7 @@ namespace Project.System
             }
             
             UnloadCurrentScene();
-            SceneManager.UnloadSceneAsync(currentScene);
+            await SceneManager.UnloadSceneAsync(currentScene);
             
             // シーン初期化
             currentScene = result.scene;

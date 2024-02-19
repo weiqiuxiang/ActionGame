@@ -5,21 +5,21 @@ using UnityEngine;
 namespace Project
 {
     /// <summary>
-    /// TitleのScene
+    /// ActionGameのScene
     /// </summary>
-    public class TitleScene : SceneBase
+    public class ActionGameScene : SceneBase
     {
-        [SerializeField] private TitlePresenter presenter;
-        [SerializeField] private TitleView view;
+        [SerializeField] private ActionGamePresenter presenter;
+        [SerializeField] private ActionGameView view;
 
-        private TitleModel model;
+        private ActionGameModel model;
         
         public override async UniTask Prepare(IAssetsLoader loader, SceneTransitionController sceneTransitionController, object sceneData = null)
         {
             await base.Prepare(loader, sceneTransitionController, sceneData);
             
             // MVP初期化
-            model = new TitleModel();
+            model = new ActionGameModel();
             model.Initialize();
             view.Prepare(AssetLoader);
             view.Initialize();

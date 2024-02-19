@@ -1,21 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
+using Project.System;
 using UnityEngine;
 
 namespace Project
 {
+    /// <summary>
+    /// TitleのView
+    /// </summary>
     public class TitleView : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        private SceneAssetLoader loader;
         
+        public void Prepare(SceneAssetLoader loader)
+        {
+            this.loader = loader;
         }
-
-        // Update is called once per frame
-        void Update()
-        {
         
+        public void Initialize()
+        {
+            
         }
     }
 }

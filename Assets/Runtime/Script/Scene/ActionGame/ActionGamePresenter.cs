@@ -4,15 +4,15 @@ using UnityEngine;
 namespace Project
 {
     /// <summary>
-    /// TitleのPresenter
+    /// ActionGameのPresenter
     /// </summary>
-    public class TitlePresenter : MonoBehaviour
+    public class ActionGamePresenter : MonoBehaviour
     {
-        private TitleView view;
-        private TitleModel model;
+        private ActionGameView view;
+        private ActionGameModel model;
         private SceneAssetLoader loader;
         
-        public void Prepare(TitleView view, TitleModel model, SceneAssetLoader loader)
+        public void Prepare(ActionGameView view, ActionGameModel model, SceneAssetLoader loader)
         {
             this.view = view;
             this.model = model;
