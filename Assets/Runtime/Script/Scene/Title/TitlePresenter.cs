@@ -1,21 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using Project.System;
+using Project.Utilities;
+using UniRx;
 using UnityEngine;
 
 namespace Project
 {
+    /// <summary>
+    /// TitleのPresenter
+    /// </summary>
     public class TitlePresenter : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        private TitleView view;
+        private TitleModel model;
+        private SceneAssetLoader loader;
         
-        }
+        public void Prepare(TitleView view, TitleModel model, SceneAssetLoader loader)
+        {
+            this.view = view;
+            this.model = model;
+            this.loader = loader;
 
-        // Update is called once per frame
-        void Update()
-        {
+            view.Button.OnClickAsObservable()
+                .Subscribe(_ => SceneTransitionController.Instance.Transition(SceneDefine.ActionGame).Forget())
+                .AddTo(this);
+        }
         
+        public void Initialize()
+        {
+            
         }
     }
 }

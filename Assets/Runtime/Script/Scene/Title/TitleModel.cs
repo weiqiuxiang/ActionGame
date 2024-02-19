@@ -1,21 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Project
 {
-    public class TitleModel : MonoBehaviour
+    /// <summary>
+    /// Titleのmodel
+    /// </summary>
+    public class TitleModel
     {
-        // Start is called before the first frame update
-        void Start()
+        public TitleModel()
         {
-        
+            
         }
-
-        // Update is called once per frame
-        void Update()
-        {
         
+        /// <summary>
+        /// 初期化
+        /// </summary>
+        public void Initialize()
+        {
+            
         }
     }
 }

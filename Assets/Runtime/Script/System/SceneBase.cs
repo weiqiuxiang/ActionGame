@@ -14,23 +14,27 @@ namespace Project
         protected object data;
         public object Data => data;
         public SceneAssetLoader AssetLoader { get; private set; }
-        public SceneTransitionController SceneTransitionController { get; private set; }
 
         /// <summary>
-        /// 初期化
+        /// 準備
+        /// *シーンに入った直後、一回のみ呼び出す処理
         /// </summary>
         /// <param name="loader">アセットLoader</param>
         /// <param name="sceneTransitionController"></param>
         /// <param name="sceneData">シーンデータ</param>
         /// <returns></returns>
-        public virtual UniTask Prepare(IAssetsLoader loader, SceneTransitionController sceneTransitionController, object sceneData = null)
+        public virtual UniTask Prepare(IAssetsLoader loader, object sceneData = null)
         {
             AssetLoader = new SceneAssetLoader(loader);
-            SceneTransitionController = sceneTransitionController;
             data = sceneData;
             return UniTask.CompletedTask;
         }
         
+        /// <summary>
+        /// 初期化
+        /// *シーンの初期化や全体更新する際に呼び出す
+        /// </summary>
+        /// <returns></returns>
         public virtual UniTask Initialize() => UniTask.CompletedTask;
 
         /// <summary>

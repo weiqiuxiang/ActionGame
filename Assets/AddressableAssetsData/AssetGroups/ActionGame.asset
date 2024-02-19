@@ -17,7 +17,7 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 015780af112c35744ae8322867e49992
   m_SerializeEntries:
-  - m_GUID: 99c9720ab356a0642a771bea13969a05
+  - m_GUID: 99e9cf42e6e8c6e46804508ba75d6fbc
     m_Address: ActionGame/ActionGame
     m_ReadOnly: 0
     m_SerializedLabels: []
