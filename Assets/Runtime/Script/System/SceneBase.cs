@@ -14,7 +14,6 @@ namespace Project
         protected object data;
         public object Data => data;
         public SceneAssetLoader AssetLoader { get; private set; }
-        public SceneTransitionController SceneTransitionController { get; private set; }
 
         /// <summary>
         /// 準備
@@ -24,10 +23,9 @@ namespace Project
         /// <param name="sceneTransitionController"></param>
         /// <param name="sceneData">シーンデータ</param>
         /// <returns></returns>
-        public virtual UniTask Prepare(IAssetsLoader loader, SceneTransitionController sceneTransitionController, object sceneData = null)
+        public virtual UniTask Prepare(IAssetsLoader loader, object sceneData = null)
         {
             AssetLoader = new SceneAssetLoader(loader);
-            SceneTransitionController = sceneTransitionController;
             data = sceneData;
             return UniTask.CompletedTask;
         }

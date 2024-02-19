@@ -1,4 +1,7 @@
+using Cysharp.Threading.Tasks;
 using Project.System;
+using Project.Utilities;
+using UniRx;
 using UnityEngine;
 
 namespace Project
@@ -17,6 +20,10 @@ namespace Project
             this.view = view;
             this.model = model;
             this.loader = loader;
+
+            view.Button.OnClickAsObservable()
+                .Subscribe(_ => SceneTransitionController.Instance.Transition(SceneDefine.ActionGame).Forget())
+                .AddTo(this);
         }
         
         public void Initialize()

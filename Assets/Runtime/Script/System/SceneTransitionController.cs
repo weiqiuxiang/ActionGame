@@ -18,11 +18,22 @@ namespace Project.System
         public SceneDefine CurrentSceneDefine { get; private set; }
         private Scene currentScene;
         private SceneBase currentSceneBase;
-        private readonly IAssetsLoader loader;
+        private IAssetsLoader loader;
         public bool HasBackScene => history.Count > 1;  //戻れるシーンはあるか？
         public SceneDefine BackSceneDefine => history[^2];  // 戻れるシーンのSceneDefineを取得(*HasBackSceneはtrueでないと、エラー吐く)
-        
-        public SceneTransitionController(IAssetsLoader loader, Scene startScene, SceneBase startSceneBase)
+
+        /// <summary>
+        /// シングルトンパターンにする
+        /// </summary>
+        public static SceneTransitionController Instance { get; } = new SceneTransitionController();
+
+        /// <summary>
+        /// 準備
+        /// </summary>
+        /// <param name="loader"></param>
+        /// <param name="startScene"></param>
+        /// <param name="startSceneBase"></param>
+        public void Prepare(IAssetsLoader loader, Scene startScene, SceneBase startSceneBase)
         {
             this.loader = loader;
 
@@ -64,7 +75,7 @@ namespace Project.System
             CurrentSceneDefine = sceneDefine;
             currentSceneBase = result.sceneBase;
             history.Add(sceneDefine);
-            await currentSceneBase.Prepare(loader, this, sceneData);
+            await currentSceneBase.Prepare(loader, sceneData);
         }
 
         /// <summary>
@@ -96,7 +107,7 @@ namespace Project.System
             currentScene = result.scene;
             CurrentSceneDefine = sceneDefine;
             currentSceneBase = result.sceneBase;
-            await currentSceneBase.Prepare(loader, this, sceneData);
+            await currentSceneBase.Prepare(loader, sceneData);
             await currentSceneBase.BackFromNext();  // 前のシーンに戻る際の処理
         }
 

@@ -27,7 +27,7 @@ namespace Project.System
             SceneBase startSceneBase = FindStartSceneBase(startScene);
             if (startSceneBase != null)
             {
-                sceneTransitionController = new SceneTransitionController(assetsLoader, startScene, startSceneBase);
+                SceneTransitionController.Instance.Prepare(assetsLoader, startScene, startSceneBase);
             }
         }
 

@@ -132,9 +132,9 @@ namespace Project
 
         private [T]Model model;
         
-        public override async UniTask Prepare(IAssetsLoader loader, SceneTransitionController sceneTransitionController, object sceneData = null)
+        public override async UniTask Prepare(IAssetsLoader loader, object sceneData = null)
         {
-            await base.Prepare(loader, sceneTransitionController, sceneData);
+            await base.Prepare(loader, sceneData);
             
             // MVP初期化
             model = new [T]Model();

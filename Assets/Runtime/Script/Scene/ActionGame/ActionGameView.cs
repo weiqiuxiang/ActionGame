@@ -1,5 +1,6 @@
 using Project.System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Project
 {
@@ -8,6 +9,9 @@ namespace Project
     /// </summary>
     public class ActionGameView : MonoBehaviour
     {
+        [SerializeField] private Button button;
+        public Button Button => button;
+        
         private SceneAssetLoader loader;
         
         public void Prepare(SceneAssetLoader loader)
