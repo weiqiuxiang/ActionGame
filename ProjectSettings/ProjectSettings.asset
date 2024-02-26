@@ -811,6 +811,7 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend:
     Server: 1
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   managedStrippingLevel:
@@ -913,7 +914,7 @@ PlayerSettings:
   hmiLogStartupTiming: 0
   hmiCpuConfiguration: 
   apiCompatibilityLevel: 6
-  activeInputHandler: 2
+  activeInputHandler: 1
   windowsGamepadBackendHint: 0
   cloudProjectId: e94cf745-603d-4e46-a69f-6c578e830414
   framebufferDepthMemorylessMode: 0

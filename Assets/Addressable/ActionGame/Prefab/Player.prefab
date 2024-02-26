@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2374186283172763808}
   m_Layer: 0
-  m_Name: UnityChan
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,6 +40,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2374186283172763808}
     m_Modifications:
+    - target: {fileID: -6057140222963153312, guid: f2c836f3e5c029140a0cc913d7df766a,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 11696ec79b6440747a1af8b88988bf7a, type: 2}
     - target: {fileID: -4216859302048453862, guid: f2c836f3e5c029140a0cc913d7df766a,
         type: 3}
       propertyPath: m_LocalPosition.x

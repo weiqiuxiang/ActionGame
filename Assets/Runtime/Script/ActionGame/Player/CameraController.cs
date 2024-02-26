@@ -5,7 +5,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Project.Player
+namespace Project.ActionGame
 {
     public class CameraController : MonoBehaviour
     {

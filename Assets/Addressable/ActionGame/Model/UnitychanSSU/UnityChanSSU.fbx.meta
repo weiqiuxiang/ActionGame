@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: f2c836f3e5c029140a0cc913d7df766a
 ModelImporter:
-  serializedVersion: 19300
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -74,6 +74,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
@@ -99,26 +100,35 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 0
     importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 0
+    bakeAxisConversion: 0
     preserveHierarchy: 0
     skinWeightsMode: 1
     maxBonesPerVertex: 8
     minBoneWeight: 0.001
+    optimizeBones: 1
     meshOptimizationFlags: 0
     indexFormat: 0
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -308,6 +318,14 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
+    - boneName: DB_Hair_FN_01
+      humanName: Jaw
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
     - boneName: CH_Chest
       humanName: Chest
       limit:
@@ -356,30 +374,6 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: CH_FingerMid0_L
-      humanName: Left Middle Proximal
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: CH_FingerR0_L
-      humanName: Left Ring Proximal
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: CH_FingerP0_L
-      humanName: Left Little Proximal
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
     - boneName: CH_FingerIn1_L
       humanName: Left Index Intermediate
       limit:
@@ -390,6 +384,14 @@ ModelImporter:
         modified: 0
     - boneName: CH_FingerIn2_L
       humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CH_FingerMid0_L
+      humanName: Left Middle Proximal
       limit:
         min: {x: 0, y: 0, z: 0}
         max: {x: 0, y: 0, z: 0}
@@ -412,6 +414,14 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
+    - boneName: CH_FingerR0_L
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
     - boneName: CH_FingerR1_L
       humanName: Left Ring Intermediate
       limit:
@@ -422,6 +432,14 @@ ModelImporter:
         modified: 0
     - boneName: CH_FingerR2_L
       humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CH_FingerP0_L
+      humanName: Left Little Proximal
       limit:
         min: {x: 0, y: 0, z: 0}
         max: {x: 0, y: 0, z: 0}
@@ -452,38 +470,6 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
-    - boneName: CH_FingerIn0_R
-      humanName: Right Index Proximal
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: CH_FingerMid0_R
-      humanName: Right Middle Proximal
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: CH_FingerR0_R
-      humanName: Right Ring Proximal
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: CH_FingerP0_R
-      humanName: Right Little Proximal
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
     - boneName: CH_FingerTh1_R
       humanName: Right Thumb Intermediate
       limit:
@@ -494,6 +480,14 @@ ModelImporter:
         modified: 0
     - boneName: CH_FingerTh2_R
       humanName: Right Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CH_FingerIn0_R
+      humanName: Right Index Proximal
       limit:
         min: {x: 0, y: 0, z: 0}
         max: {x: 0, y: 0, z: 0}
@@ -516,6 +510,14 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
+    - boneName: CH_FingerMid0_R
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
     - boneName: CH_FingerMid1_R
       humanName: Right Middle Intermediate
       limit:
@@ -532,6 +534,14 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
+    - boneName: CH_FingerR0_R
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
     - boneName: CH_FingerR1_R
       humanName: Right Ring Intermediate
       limit:
@@ -542,6 +552,14 @@ ModelImporter:
         modified: 0
     - boneName: CH_FingerR2_R
       humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: CH_FingerP0_R
+      humanName: Right Little Proximal
       limit:
         min: {x: 0, y: 0, z: 0}
         max: {x: 0, y: 0, z: 0}
@@ -565,13 +583,13 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: yy_unitychan(Clone)
+    - name: UnityChanSSU(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Character1_Reference
-      parentName: yy_unitychan(Clone)
+      parentName: UnityChanSSU(Clone)
       position: {x: -0, y: 0, z: 0.0000000012162994}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -868,7 +886,7 @@ ModelImporter:
     - name: DB_Hair_FM_END
       parentName: DB_Hair_FM_01
       position: {x: -0.019831877, y: 0.040484365, z: 0.0038124202}
-      rotation: {x: 0.5501261, y: -0.36440137, z: -0.4404198, w: 0.6087721}
+      rotation: {x: 0.5501261, y: -0.36440134, z: -0.4404198, w: 0.60877204}
       scale: {x: 1, y: 1, z: 1}
     - name: DB_Hair_FN_01
       parentName: J_Hair_Root
@@ -933,7 +951,7 @@ ModelImporter:
     - name: DB_Osage_L_01
       parentName: J_Hair_Root
       position: {x: -0.08485901, y: -0.1201499, z: 0.019014785}
-      rotation: {x: 0.24627385, y: 0.78311384, z: -0.031549405, w: 0.5701637}
+      rotation: {x: 0.24627382, y: 0.78311384, z: -0.0315494, w: 0.5701637}
       scale: {x: 1, y: 1, z: 1}
     - name: DB_Osage_L_02
       parentName: DB_Osage_L_01
@@ -958,7 +976,7 @@ ModelImporter:
     - name: DB_Osage_L_06
       parentName: DB_Osage_L_05
       position: {x: -0.06877094, y: -0.00018288563, z: 0.006546923}
-      rotation: {x: -0.03325948, y: -0.06001027, z: 0.0026448104, w: 0.99764}
+      rotation: {x: -0.033259485, y: -0.06001027, z: 0.0026448106, w: 0.99764}
       scale: {x: 1, y: 1, z: 1}
     - name: DB_Osage_L_END
       parentName: DB_Osage_L_06
@@ -1018,17 +1036,17 @@ ModelImporter:
     - name: CH_Hand_L
       parentName: CH_For_L
       position: {x: -0.21556541, y: 0.0063841813, z: 0.0046451697}
-      rotation: {x: -0.008476481, y: -0.020129982, z: 0.0036872295, w: 0.99975467}
+      rotation: {x: -0.011166713, y: -0.05903811, z: 0.0320681, w: 0.99767804}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerIn0_L
       parentName: CH_Hand_L
       position: {x: -0.0847278, y: 0.007956116, z: 0.027233126}
-      rotation: {x: -0.2957208, y: -0.31252515, z: 0.5355547, w: 0.7266763}
+      rotation: {x: -0.30887187, y: -0.2606802, z: 0.4827537, w: 0.7769124}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerIn1_L
       parentName: CH_FingerIn0_L
       position: {x: -0.013916133, y: 0.01899603, z: 0.026483893}
-      rotation: {x: 0.35204482, y: 0.025510883, z: 0.01769735, w: 0.935468}
+      rotation: {x: 0.36616132, y: 0.08979515, z: -0.068163686, w: 0.9236972}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerIn2_L
       parentName: CH_FingerIn1_L
@@ -1038,12 +1056,12 @@ ModelImporter:
     - name: CH_FingerMid0_L
       parentName: CH_Hand_L
       position: {x: -0.087425776, y: 0.012846302, z: 0.010813513}
-      rotation: {x: -0.13829876, y: -0.16073565, z: 0.5006357, w: 0.83928627}
+      rotation: {x: -0.14877094, y: -0.10735402, z: 0.3738227, w: 0.9091749}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerMid1_L
       parentName: CH_FingerMid0_L
       position: {x: -0.02246897, y: 0.02796257, z: 0.014776466}
-      rotation: {x: 0.19112699, y: 0.034213535, z: 0.045342844, w: 0.9799204}
+      rotation: {x: 0.19086695, y: 0.05707431, z: -0.040433712, w: 0.9791208}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerMid2_L
       parentName: CH_FingerMid1_L
@@ -1053,12 +1071,12 @@ ModelImporter:
     - name: CH_FingerP0_L
       parentName: CH_Hand_L
       position: {x: -0.081742145, y: 0.009624273, z: -0.022761483}
-      rotation: {x: 0.19822651, y: 0.20578277, z: 0.5754243, w: 0.76632017}
+      rotation: {x: 0.2405163, y: 0.2229026, z: 0.48124915, w: 0.8129364}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerP1_L
       parentName: CH_FingerP0_L
       position: {x: -0.014013966, y: 0.022571895, z: -0.01734942}
-      rotation: {x: -0.28559428, y: -0.053097766, z: -0.22073199, w: 0.9310714}
+      rotation: {x: -0.2880384, y: -0.071755245, z: -0.2551474, w: 0.9202092}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerP2_L
       parentName: CH_FingerP1_L
@@ -1068,12 +1086,12 @@ ModelImporter:
     - name: CH_FingerR0_L
       parentName: CH_Hand_L
       position: {x: -0.0860981, y: 0.011822975, z: -0.006614272}
-      rotation: {x: 0.0100212535, y: 0.023653483, z: 0.45637086, w: 0.8894188}
+      rotation: {x: 0.025539923, y: 0.057396565, z: 0.39046934, w: 0.91847}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerR1_L
       parentName: CH_FingerR0_L
       position: {x: -0.02524847, y: 0.026415195, z: -0.0027730644}
-      rotation: {x: 0.008882094, y: 0.0030260414, z: 0.11579627, w: 0.9932287}
+      rotation: {x: 0.0016452587, y: -0.012200291, z: 0.024009313, w: 0.999636}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerR2_L
       parentName: CH_FingerR1_L
@@ -1083,12 +1101,12 @@ ModelImporter:
     - name: CH_FingerTh0_L
       parentName: CH_Hand_L
       position: {x: -0.021174444, y: -0.008122527, z: 0.025993548}
-      rotation: {x: -0.22491191, y: -0.17107964, z: 0.7084456, w: 0.64672345}
+      rotation: {x: -0.13252263, y: 0.07854673, z: 0.68654853, w: 0.7105767}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerTh1_L
       parentName: CH_FingerTh0_L
       position: {x: -0.0119849015, y: 0.03281999, z: 0.03712641}
-      rotation: {x: -0.031109724, y: -0.23704268, z: -0.39667624, w: 0.8862793}
+      rotation: {x: 0.13526356, y: -0.19526654, z: -0.36438543, w: 0.90044326}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerTh2_L
       parentName: CH_FingerTh1_L
@@ -1128,17 +1146,17 @@ ModelImporter:
     - name: CH_Hand_R
       parentName: CH_For_R
       position: {x: 0.21556555, y: 0.006385759, z: 0.0046450566}
-      rotation: {x: 0.0036884143, y: 0.99975467, z: -0.008476599, w: -0.020129692}
+      rotation: {x: 0.032064874, y: 0.9976783, z: -0.011167021, w: -0.05903596}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerIn0_R
       parentName: CH_Hand_R
       position: {x: -0.084727906, y: 0.007956149, z: -0.027233081}
-      rotation: {x: 0.29572242, y: 0.31252357, z: 0.5355616, w: 0.7266712}
+      rotation: {x: 0.30887353, y: 0.26067778, z: 0.4827597, w: 0.7769089}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerIn1_R
       parentName: CH_FingerIn0_R
       position: {x: -0.01391596, y: 0.018996296, z: -0.026483973}
-      rotation: {x: -0.35204247, y: -0.025519691, z: 0.017658653, w: 0.9354694}
+      rotation: {x: -0.3661568, y: -0.089800544, z: -0.06819674, w: 0.92369604}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerIn2_R
       parentName: CH_FingerIn1_R
@@ -1148,12 +1166,12 @@ ModelImporter:
     - name: CH_FingerMid0_R
       parentName: CH_Hand_R
       position: {x: -0.08742585, y: 0.012846061, z: -0.010813475}
-      rotation: {x: 0.13830063, y: 0.16073582, z: 0.50063354, w: 0.8392872}
+      rotation: {x: 0.1419106, y: 0.12469301, z: 0.42594644, w: 0.8848066}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerMid1_R
       parentName: CH_FingerMid0_R
       position: {x: -0.022469133, y: 0.027962355, z: -0.014776474}
-      rotation: {x: -0.19112866, y: -0.034214567, z: 0.04533383, w: 0.97992045}
+      rotation: {x: -0.18953842, y: -0.055850934, z: -0.038454514, w: 0.9795291}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerMid2_R
       parentName: CH_FingerMid1_R
@@ -1163,12 +1181,12 @@ ModelImporter:
     - name: CH_FingerP0_R
       parentName: CH_Hand_R
       position: {x: -0.08174223, y: 0.009624269, z: 0.022761492}
-      rotation: {x: -0.1982202, y: -0.20577641, z: 0.57542044, w: 0.7663264}
+      rotation: {x: -0.24050958, y: -0.2228985, z: 0.48124796, w: 0.81294024}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerP1_R
       parentName: CH_FingerP0_R
       position: {x: -0.014014378, y: 0.02257213, z: 0.01734919}
-      rotation: {x: 0.28557172, y: 0.053094003, z: -0.22072352, w: 0.9310805}
+      rotation: {x: 0.28801683, y: 0.071753174, z: -0.25513986, w: 0.92021817}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerP2_R
       parentName: CH_FingerP1_R
@@ -1178,12 +1196,12 @@ ModelImporter:
     - name: CH_FingerR0_R
       parentName: CH_Hand_R
       position: {x: -0.08609818, y: 0.011822869, z: 0.0066142958}
-      rotation: {x: -0.010022374, y: -0.023653872, z: 0.45636997, w: 0.8894192}
+      rotation: {x: -0.025540873, y: -0.057396237, z: 0.39047036, w: 0.91846955}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerR1_R
       parentName: CH_FingerR0_R
       position: {x: -0.025248656, y: 0.026415236, z: 0.0027731236}
-      rotation: {x: -0.0088752555, y: -0.0030255336, z: 0.11578587, w: 0.9932299}
+      rotation: {x: -0.001639077, y: 0.012199912, z: 0.023998866, w: 0.9996363}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerR2_R
       parentName: CH_FingerR1_R
@@ -1193,12 +1211,12 @@ ModelImporter:
     - name: CH_FingerTh0_R
       parentName: CH_Hand_R
       position: {x: -0.021174476, y: -0.008122601, z: -0.025993519}
-      rotation: {x: 0.22492146, y: 0.17107955, z: 0.70844746, w: 0.6467182}
+      rotation: {x: 0.13253254, y: -0.07854894, z: 0.68655205, w: 0.7105713}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerTh1_R
       parentName: CH_FingerTh0_R
       position: {x: -0.011985115, y: 0.032819718, z: -0.037126675}
-      rotation: {x: 0.031113474, y: 0.23704278, z: -0.39669403, w: 0.8862711}
+      rotation: {x: -0.13526146, y: 0.19527006, z: -0.36439848, w: 0.90043753}
       scale: {x: 1, y: 1, z: 1}
     - name: CH_FingerTh2_R
       parentName: CH_FingerTh1_R
@@ -1392,7 +1410,7 @@ ModelImporter:
       rotation: {x: -0.0000007530054, y: -0.0000006637688, z: -0.000001765788, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: MeshRoot
-      parentName: yy_unitychan(Clone)
+      parentName: UnityChanSSU(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
@@ -1493,6 +1511,9 @@ ModelImporter:
   animationType: 3
   humanoidOversampling: 1
   avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
