@@ -4,13 +4,8 @@ using UnityEngine;
 
 namespace Project.ActionGame
 {
-    public class PlayerAnimationController
+    public class PlayerAnimationController : MonoBehaviour
     {
-        private readonly Animator animator;
-
-        public PlayerAnimationController(Animator animator)
-        {
-            this.animator = animator;
-        }
+        [SerializeField] private Animator playerAnimator;
     }
 }

@@ -16,9 +16,6 @@ namespace Project
         private ActionGameView view;
         private ActionGameModel model;
         private SceneAssetLoader loader;
-
-        private PlayerAnimationController playerAnimationController;
-        private PlayerStatusManager playerStatusManager;
         
         public void Prepare(ActionGameView view, ActionGameModel model, SceneAssetLoader loader)
         {
@@ -40,25 +37,6 @@ namespace Project
         private void Resume()
         {
             playerController.Resume();
-        }
-
-        private void Start()
-        {
-            playerAnimationController = new PlayerAnimationController(playerController.PlayerAnimator);
-            playerStatusManager = new PlayerStatusManager(playerAnimationController, playerController);
-            playerController.Initalize();
-            playerStatusManager.Initialize();
-        }
-
-        private void FixedUpdate()
-        {
-            playerController.UpdateFall();
-            playerStatusManager.FixedUpdate();
-        }
-
-        private void Update()
-        {
-            playerStatusManager.Update();
         }
 
         private void OnDestroy()

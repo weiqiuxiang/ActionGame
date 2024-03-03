@@ -38,5 +38,11 @@ namespace Project.Extensions
             vector.y = value;
             return vector;
         }
+        
+        public static Vector3 AddY(this Vector3 vector, float value)
+        {
+            vector.y += value;
+            return vector;
+        }
     }
 }

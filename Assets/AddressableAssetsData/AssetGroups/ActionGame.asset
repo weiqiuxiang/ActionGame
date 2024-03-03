@@ -322,6 +322,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0798b8ed8dba59d40b3a9ee8ce87a467
+    m_Address: ActionGame/Settings/PlayerSettings
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f85b119c46e2dd8468dcb6e247c25708
+    m_Address: ActionGame/Settings/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8e0c6ac69b4bc0f49a6ac0efe55328c9, type: 2}
   m_SchemaSet:

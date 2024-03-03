@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -8,20 +9,18 @@ namespace Project.ActionGame
     /// <summary>
     /// プレイヤーのステータス遷移
     /// </summary>
-    public class PlayerStatusManager
+    public class PlayerStateMachine : MonoBehaviour
     {
-        private readonly PlayerAnimationController animationController;
-        private readonly PlayerController playerController;
+        [SerializeField] private PlayerController controller;
         private readonly PlayerStatusData playerStatusData = new PlayerStatusData();
 
         private Dictionary<PlayerStatus, PlayerStatusBase> playerStatusDictionary;
 
-        public PlayerStatusManager(PlayerAnimationController animationController, PlayerController playerController)
+        private void Start()
         {
-            this.animationController = animationController;
-            this.playerController = playerController;
+            Initialize();
         }
-        
+
         public void Initialize()
         {
             playerStatusData.Initialize();
@@ -33,19 +32,22 @@ namespace Project.ActionGame
             if (playerStatusDictionary == null)
             {
                 playerStatusDictionary = new Dictionary<PlayerStatus, PlayerStatusBase>();
-                playerStatusDictionary.Add(PlayerStatus.IdleAndMove, new PlayerIdleAndMoveStatus(animationController, playerController));
+                
+                // 各state初期化
+                playerStatusDictionary.Add(PlayerStatus.IdleAndMove, new PlayerIdleAndMoveStatus(controller));
+                playerStatusDictionary.Add(PlayerStatus.InAir, new PlayerInAirStatus(controller));
             }
             
             playerStatusData.SetStatus(PlayerStatus.IdleAndMove);
             playerStatusDictionary[playerStatusData.CurrentStatus].InStatus(PlayerStatus.None);
         }
 
-        public void FixedUpdate()
+        private void FixedUpdate()
         {
             UpdateStatus(playerStatusDictionary[playerStatusData.CurrentStatus].FixedUpdate());
         }
 
-        public void Update()
+        private void Update()
         {
             UpdateStatus(playerStatusDictionary[playerStatusData.CurrentStatus].Update());
         }

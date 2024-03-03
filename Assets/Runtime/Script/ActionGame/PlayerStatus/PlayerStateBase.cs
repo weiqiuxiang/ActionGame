@@ -11,12 +11,10 @@ namespace Project.ActionGame
     /// </summary>
     public abstract class PlayerStatusBase
     {
-        protected readonly PlayerAnimationController animationController;
         protected readonly PlayerController playerController;
         
-        public PlayerStatusBase(PlayerAnimationController animationController, PlayerController playerController)
+        public PlayerStatusBase(PlayerController playerController)
         {
-            this.animationController = animationController;
             this.playerController = playerController;
         }
 

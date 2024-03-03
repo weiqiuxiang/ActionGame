@@ -11,13 +11,14 @@ namespace Project
     /// </summary>
     public class PlayerIdleAndMoveStatus : PlayerStatusBase
     {
-        public PlayerIdleAndMoveStatus(PlayerAnimationController animationController, PlayerController playerController) : base(animationController, playerController)
+        public PlayerIdleAndMoveStatus(PlayerController playerController) : base(playerController)
         {
         }
 
         public override void InStatus(PlayerStatus lastStatus)
         {
             playerController.ResetInputValues();
+            playerController.SetMoveDirectionEqualPlayerDirection();
         }
 
         public override void OutStatus()
