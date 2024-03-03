@@ -9,8 +9,8 @@ namespace Project
     /// </summary>
     public class ActionGameView : MonoBehaviour
     {
-        [SerializeField] private Button button;
-        public Button Button => button;
+        [SerializeField] private ActionGameMenuView actionGameMenuView;
+        [SerializeField] private PlayerUIView playerUIView;
         
         private SceneAssetLoader loader;
         
@@ -23,5 +23,7 @@ namespace Project
         {
             
         }
+        
+        
     }
 }

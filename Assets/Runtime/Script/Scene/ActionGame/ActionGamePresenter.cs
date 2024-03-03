@@ -1,7 +1,7 @@
-using Cysharp.Threading.Tasks;
+using System;
+using Project.ActionGame;
 using Project.System;
 using Project.Utilities;
-using UniRx;
 using UnityEngine;
 
 namespace Project
@@ -11,6 +11,8 @@ namespace Project
     /// </summary>
     public class ActionGamePresenter : MonoBehaviour
     {
+        [SerializeField] private PlayerController playerController;
+        
         private ActionGameView view;
         private ActionGameModel model;
         private SceneAssetLoader loader;
@@ -20,13 +22,24 @@ namespace Project
             this.view = view;
             this.model = model;
             this.loader = loader;
-            
-            view.Button.OnClickAsObservable()
-                .Subscribe(_ => SceneTransitionController.Instance.Back().Forget())
-                .AddTo(this);
         }
-        
-        public void Initialize()
+
+        private void OpenCloseMenu()
+        {
+            
+        }
+
+        private void Pause()
+        {
+            playerController.Pause();
+        }
+
+        private void Resume()
+        {
+            playerController.Resume();
+        }
+
+        private void OnDestroy()
         {
             
         }

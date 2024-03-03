@@ -48,9 +48,27 @@ namespace Project
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Fire"",
+                    ""name"": ""Attack"",
                     ""type"": ""Button"",
                     ""id"": ""7b19f064-8e9b-4bc1-9b97-302982e33157"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RunOrDodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""d7f37baf-d346-43ac-8ed3-ae616999fdc0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=0.1)"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""67f72631-a560-45fd-b0a3-f5e3a0df8348"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -226,11 +244,11 @@ namespace Project
                 {
                     ""name"": """",
                     ""id"": ""143bb1cd-cc10-4eca-a2f0-a3664166fe91"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -241,18 +259,7 @@ namespace Project
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""886e731e-7071-4ae4-95c0-e61739dad6fd"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Touch"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -263,7 +270,7 @@ namespace Project
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -274,7 +281,51 @@ namespace Project
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XR"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85045361-ee5a-49c1-becd-75b480d2408d"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""RunOrDodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59f6b494-5173-4f36-a0f4-bb6a8e0a40f6"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RunOrDodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2331c06-59b5-4c4e-adf8-6e63f57f99ff"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""673aed0c-dfc5-48a8-b2a5-aa45182462ef"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -282,12 +333,12 @@ namespace Project
         },
         {
             ""name"": ""UI"",
-            ""id"": ""46f933c2-460c-493d-a627-a87414195217"",
+            ""id"": ""b4136d30-bedc-4b1b-b62a-515f29f4545d"",
             ""actions"": [
                 {
                     ""name"": ""Navigate"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""9519d8ee-b1a7-4f2d-a20f-9826004d1aec"",
+                    ""id"": ""e2347760-144a-487c-82ed-a7ffb13a7ef8"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -296,7 +347,7 @@ namespace Project
                 {
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
-                    ""id"": ""02146d51-a3b3-4be9-a996-c49447ba11c0"",
+                    ""id"": ""089b23ff-34d5-4619-8b9c-62abb7a3c710"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -305,7 +356,7 @@ namespace Project
                 {
                     ""name"": ""Cancel"",
                     ""type"": ""Button"",
-                    ""id"": ""588d0c62-3d43-4ddb-a47a-5ae67fffe1b0"",
+                    ""id"": ""ea1ace65-0c00-472a-a95c-5f589b891b3b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -314,7 +365,7 @@ namespace Project
                 {
                     ""name"": ""Point"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""b8ac2128-aaba-41be-840f-075b515ce47e"",
+                    ""id"": ""01e818d2-3e2d-42c6-bcd6-1122ae10014a"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -323,7 +374,7 @@ namespace Project
                 {
                     ""name"": ""Click"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""16ae20aa-4da3-4c52-b103-ced867b1f21b"",
+                    ""id"": ""efefce27-d946-4a01-87dc-7a81eb6fbb05"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -332,7 +383,7 @@ namespace Project
                 {
                     ""name"": ""ScrollWheel"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""63e81508-9995-40cc-a705-0928d7afd312"",
+                    ""id"": ""30ebfb0b-04d5-44d8-bfdb-7309e62fab49"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -341,7 +392,7 @@ namespace Project
                 {
                     ""name"": ""MiddleClick"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""64fb99f5-6a15-4d5c-aa4d-1f190f169793"",
+                    ""id"": ""29fad8f5-9690-4d6a-9019-584471e5994c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -350,7 +401,7 @@ namespace Project
                 {
                     ""name"": ""RightClick"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""7d392d1d-c865-4832-9a81-eb9f51f63c18"",
+                    ""id"": ""12724bb1-3c94-473b-994c-93771487869d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -359,7 +410,7 @@ namespace Project
                 {
                     ""name"": ""TrackedDevicePosition"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""457f7902-3ccc-4d31-b739-b15042ad0ece"",
+                    ""id"": ""37bdd576-d508-4f54-8380-6f6e7ea3bea8"",
                     ""expectedControlType"": ""Vector3"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -368,7 +419,7 @@ namespace Project
                 {
                     ""name"": ""TrackedDeviceOrientation"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""d8464bc7-7184-4aa1-8f2e-89e8f783f3cd"",
+                    ""id"": ""8fb5a57f-fd13-4ad0-9c98-0c4d4cb14ed3"",
                     ""expectedControlType"": ""Quaternion"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -378,7 +429,7 @@ namespace Project
             ""bindings"": [
                 {
                     ""name"": ""Gamepad"",
-                    ""id"": ""809f371f-c5e2-4e7a-83a1-d867598f40dd"",
+                    ""id"": ""5f73eb65-7485-44a6-a3fd-b5c7715d37a3"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -389,7 +440,7 @@ namespace Project
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""14a5d6e8-4aaf-4119-a9ef-34b8c2c548bf"",
+                    ""id"": ""8490c183-d8b7-485a-bc43-7a32397331ee"",
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -400,7 +451,7 @@ namespace Project
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""9144cbe6-05e1-4687-a6d7-24f99d23dd81"",
+                    ""id"": ""f37347ac-b69e-468a-8ace-ed27d5a4dd3c"",
                     ""path"": ""<Gamepad>/rightStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -411,7 +462,7 @@ namespace Project
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""2db08d65-c5fb-421b-983f-c71163608d67"",
+                    ""id"": ""51ec1576-f4d4-405f-8189-a8142fcbe871"",
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -422,7 +473,7 @@ namespace Project
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""58748904-2ea9-4a80-8579-b500e6a76df8"",
+                    ""id"": ""905534ef-5ec4-42b9-9d2d-8096bc9d7668"",
                     ""path"": ""<Gamepad>/rightStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -433,7 +484,7 @@ namespace Project
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""8ba04515-75aa-45de-966d-393d9bbd1c14"",
+                    ""id"": ""a1a0c2ed-3dde-4b79-a0e1-009d1492d917"",
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -444,7 +495,7 @@ namespace Project
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""712e721c-bdfb-4b23-a86c-a0d9fcfea921"",
+                    ""id"": ""8a49393e-665d-42fb-acfc-621176272fc7"",
                     ""path"": ""<Gamepad>/rightStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -455,7 +506,7 @@ namespace Project
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""fcd248ae-a788-4676-a12e-f4d81205600b"",
+                    ""id"": ""d0f8f70d-1034-497d-ac7a-f13f9861391a"",
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -466,7 +517,7 @@ namespace Project
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""1f04d9bc-c50b-41a1-bfcc-afb75475ec20"",
+                    ""id"": ""46ef6888-e871-41be-a3d0-a4745d49ee37"",
                     ""path"": ""<Gamepad>/rightStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -477,7 +528,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fb8277d4-c5cd-4663-9dc7-ee3f0b506d90"",
+                    ""id"": ""2173d1d9-5fe9-4454-a5bf-c1167c018994"",
                     ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -488,7 +539,7 @@ namespace Project
                 },
                 {
                     ""name"": ""Joystick"",
-                    ""id"": ""e25d9774-381c-4a61-b47c-7b6b299ad9f9"",
+                    ""id"": ""6ca05b70-83c0-45d7-9dad-943a94e87dc8"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -499,7 +550,7 @@ namespace Project
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""3db53b26-6601-41be-9887-63ac74e79d19"",
+                    ""id"": ""f687e96e-bd42-4aa6-b5e3-ea290cede599"",
                     ""path"": ""<Joystick>/stick/up"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -510,7 +561,7 @@ namespace Project
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""0cb3e13e-3d90-4178-8ae6-d9c5501d653f"",
+                    ""id"": ""14bfb18b-ac73-47aa-8957-0e1f25f09dab"",
                     ""path"": ""<Joystick>/stick/down"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -521,7 +572,7 @@ namespace Project
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""0392d399-f6dd-4c82-8062-c1e9c0d34835"",
+                    ""id"": ""358aae67-9fb4-4742-87f1-3c65a7d7b5fe"",
                     ""path"": ""<Joystick>/stick/left"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -532,7 +583,7 @@ namespace Project
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""942a66d9-d42f-43d6-8d70-ecb4ba5363bc"",
+                    ""id"": ""26eec01c-6547-4504-8db1-49e29950fed1"",
                     ""path"": ""<Joystick>/stick/right"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -543,7 +594,7 @@ namespace Project
                 },
                 {
                     ""name"": ""Keyboard"",
-                    ""id"": ""ff527021-f211-4c02-933e-5976594c46ed"",
+                    ""id"": ""e9e311a8-d088-4b8e-a28b-ed9873d3004f"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -554,7 +605,7 @@ namespace Project
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""563fbfdd-0f09-408d-aa75-8642c4f08ef0"",
+                    ""id"": ""82e02a0d-faf1-40df-b014-b1ab63e2696c"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -565,7 +616,7 @@ namespace Project
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""eb480147-c587-4a33-85ed-eb0ab9942c43"",
+                    ""id"": ""e36ad4b3-d593-4b3d-9a8a-652d6afe1251"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -576,7 +627,7 @@ namespace Project
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""2bf42165-60bc-42ca-8072-8c13ab40239b"",
+                    ""id"": ""2aca8479-b2f6-48d4-9440-0f3b48eae1b9"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -587,7 +638,7 @@ namespace Project
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""85d264ad-e0a0-4565-b7ff-1a37edde51ac"",
+                    ""id"": ""a5d3d8dc-43bb-43a1-8d91-e21b4fc9491d"",
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -598,7 +649,7 @@ namespace Project
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""74214943-c580-44e4-98eb-ad7eebe17902"",
+                    ""id"": ""5b89b6aa-888b-4cfa-945e-c6e21d3e04cd"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -609,7 +660,7 @@ namespace Project
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""cea9b045-a000-445b-95b8-0c171af70a3b"",
+                    ""id"": ""1e7b0214-5e6a-45e4-bce8-16fa0b3f6049"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -620,7 +671,7 @@ namespace Project
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""8607c725-d935-4808-84b1-8354e29bab63"",
+                    ""id"": ""4776b480-8810-49a2-a87f-2a9ea02aa797"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -631,7 +682,7 @@ namespace Project
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""4cda81dc-9edd-4e03-9d7c-a71a14345d0b"",
+                    ""id"": ""07788908-4721-4325-8435-1617f1eb2127"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -642,7 +693,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9e92bb26-7e3b-4ec4-b06b-3c8f8e498ddc"",
+                    ""id"": ""f0f59d40-10e3-4b3a-91d0-887e603d1ed3"",
                     ""path"": ""*/{Submit}"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -653,7 +704,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""82627dcc-3b13-4ba9-841d-e4b746d6553e"",
+                    ""id"": ""9d1765bb-2e70-42c0-b9e3-d54002db9f5a"",
                     ""path"": ""*/{Cancel}"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -664,7 +715,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c52c8e0b-8179-41d3-b8a1-d149033bbe86"",
+                    ""id"": ""9eedef4b-2d51-4bb6-afc3-41636ba385ce"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -675,7 +726,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""e1394cbc-336e-44ce-9ea8-6007ed6193f7"",
+                    ""id"": ""d812f601-dd31-4bf8-bdb4-52957be6da22"",
                     ""path"": ""<Pen>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -686,7 +737,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""5693e57a-238a-46ed-b5ae-e64e6e574302"",
+                    ""id"": ""1a7d1604-bb22-4921-bb62-9836d663e54e"",
                     ""path"": ""<Touchscreen>/touch*/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -697,7 +748,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4faf7dc9-b979-4210-aa8c-e808e1ef89f5"",
+                    ""id"": ""70d8940b-a774-4f9e-bfe3-6c4b701f8dde"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -708,7 +759,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8d66d5ba-88d7-48e6-b1cd-198bbfef7ace"",
+                    ""id"": ""ce7d870a-8f2a-4f9a-bd64-1ce810b3386c"",
                     ""path"": ""<Pen>/tip"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -719,7 +770,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""47c2a644-3ebc-4dae-a106-589b7ca75b59"",
+                    ""id"": ""c24d2cb4-e7da-4f03-aba6-63c57d5d88ec"",
                     ""path"": ""<Touchscreen>/touch*/press"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -730,7 +781,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""bb9e6b34-44bf-4381-ac63-5aa15d19f677"",
+                    ""id"": ""f68ceb22-18b5-4bc0-80e0-e0041c814c4c"",
                     ""path"": ""<XRController>/trigger"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -741,7 +792,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""38c99815-14ea-4617-8627-164d27641299"",
+                    ""id"": ""a57c8f12-49ca-403f-b200-5dfc4e976987"",
                     ""path"": ""<Mouse>/scroll"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -752,7 +803,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""24066f69-da47-44f3-a07e-0015fb02eb2e"",
+                    ""id"": ""0a867346-db85-4bce-b902-d3129e1a7e0a"",
                     ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -763,7 +814,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4c191405-5738-4d4b-a523-c6a301dbf754"",
+                    ""id"": ""f6558641-b591-4f5e-a882-ce0d53eb60f2"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -774,7 +825,7 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7236c0d9-6ca3-47cf-a6ee-a97f5b59ea77"",
+                    ""id"": ""e5ba7f8e-1090-4df0-a96d-1a03384f7ca5"",
                     ""path"": ""<XRController>/devicePosition"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -785,12 +836,113 @@ namespace Project
                 },
                 {
                     ""name"": """",
-                    ""id"": ""23e01e3a-f935-4948-8d8b-9bcac77714fb"",
+                    ""id"": ""bbc267c8-80e9-4eba-81d2-2f8cc40b7b37"",
                     ""path"": ""<XRController>/deviceRotation"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XR"",
                     ""action"": ""TrackedDeviceOrientation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UIMenu"",
+            ""id"": ""038eb82c-20b5-4192-8017-acc2a408f431"",
+            ""actions"": [
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""a96c2856-51c0-4242-9e33-c57c59d96da2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""e53dee73-b523-4217-b054-08494ea68a40"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenOrCloseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""ea69e9e5-9ca7-436c-881f-1bafb3d810fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a1235c57-5efd-4758-864a-f4d0569f4393"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3c920a3-63c1-48b4-8338-961673c41068"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""914d474d-ab00-453a-84e8-56b50133e561"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8689c6f2-83a5-410e-beac-312d02a528f1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d327769c-1773-4e09-8048-073fb59297a7"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""OpenOrCloseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fe57e50a-9453-4068-aad7-dc0c5ff9db55"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""OpenOrCloseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -864,7 +1016,9 @@ namespace Project
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-            m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+            m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
+            m_Player_RunOrDodge = m_Player.FindAction("RunOrDodge", throwIfNotFound: true);
+            m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -877,6 +1031,11 @@ namespace Project
             m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
             m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
             m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+            // UIMenu
+            m_UIMenu = asset.FindActionMap("UIMenu", throwIfNotFound: true);
+            m_UIMenu_Submit = m_UIMenu.FindAction("Submit", throwIfNotFound: true);
+            m_UIMenu_Cancel = m_UIMenu.FindAction("Cancel", throwIfNotFound: true);
+            m_UIMenu_OpenOrCloseMenu = m_UIMenu.FindAction("OpenOrCloseMenu", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -940,14 +1099,18 @@ namespace Project
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Look;
-        private readonly InputAction m_Player_Fire;
+        private readonly InputAction m_Player_Attack;
+        private readonly InputAction m_Player_RunOrDodge;
+        private readonly InputAction m_Player_Jump;
         public struct PlayerActions
         {
             private @InputController m_Wrapper;
             public PlayerActions(@InputController wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Look => m_Wrapper.m_Player_Look;
-            public InputAction @Fire => m_Wrapper.m_Player_Fire;
+            public InputAction @Attack => m_Wrapper.m_Player_Attack;
+            public InputAction @RunOrDodge => m_Wrapper.m_Player_RunOrDodge;
+            public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -963,9 +1126,15 @@ namespace Project
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @Fire.started += instance.OnFire;
-                @Fire.performed += instance.OnFire;
-                @Fire.canceled += instance.OnFire;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
+                @RunOrDodge.started += instance.OnRunOrDodge;
+                @RunOrDodge.performed += instance.OnRunOrDodge;
+                @RunOrDodge.canceled += instance.OnRunOrDodge;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -976,9 +1145,15 @@ namespace Project
                 @Look.started -= instance.OnLook;
                 @Look.performed -= instance.OnLook;
                 @Look.canceled -= instance.OnLook;
-                @Fire.started -= instance.OnFire;
-                @Fire.performed -= instance.OnFire;
-                @Fire.canceled -= instance.OnFire;
+                @Attack.started -= instance.OnAttack;
+                @Attack.performed -= instance.OnAttack;
+                @Attack.canceled -= instance.OnAttack;
+                @RunOrDodge.started -= instance.OnRunOrDodge;
+                @RunOrDodge.performed -= instance.OnRunOrDodge;
+                @RunOrDodge.canceled -= instance.OnRunOrDodge;
+                @Jump.started -= instance.OnJump;
+                @Jump.performed -= instance.OnJump;
+                @Jump.canceled -= instance.OnJump;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1114,6 +1289,68 @@ namespace Project
             }
         }
         public UIActions @UI => new UIActions(this);
+
+        // UIMenu
+        private readonly InputActionMap m_UIMenu;
+        private List<IUIMenuActions> m_UIMenuActionsCallbackInterfaces = new List<IUIMenuActions>();
+        private readonly InputAction m_UIMenu_Submit;
+        private readonly InputAction m_UIMenu_Cancel;
+        private readonly InputAction m_UIMenu_OpenOrCloseMenu;
+        public struct UIMenuActions
+        {
+            private @InputController m_Wrapper;
+            public UIMenuActions(@InputController wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Submit => m_Wrapper.m_UIMenu_Submit;
+            public InputAction @Cancel => m_Wrapper.m_UIMenu_Cancel;
+            public InputAction @OpenOrCloseMenu => m_Wrapper.m_UIMenu_OpenOrCloseMenu;
+            public InputActionMap Get() { return m_Wrapper.m_UIMenu; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(UIMenuActions set) { return set.Get(); }
+            public void AddCallbacks(IUIMenuActions instance)
+            {
+                if (instance == null || m_Wrapper.m_UIMenuActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_UIMenuActionsCallbackInterfaces.Add(instance);
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
+                @Cancel.started += instance.OnCancel;
+                @Cancel.performed += instance.OnCancel;
+                @Cancel.canceled += instance.OnCancel;
+                @OpenOrCloseMenu.started += instance.OnOpenOrCloseMenu;
+                @OpenOrCloseMenu.performed += instance.OnOpenOrCloseMenu;
+                @OpenOrCloseMenu.canceled += instance.OnOpenOrCloseMenu;
+            }
+
+            private void UnregisterCallbacks(IUIMenuActions instance)
+            {
+                @Submit.started -= instance.OnSubmit;
+                @Submit.performed -= instance.OnSubmit;
+                @Submit.canceled -= instance.OnSubmit;
+                @Cancel.started -= instance.OnCancel;
+                @Cancel.performed -= instance.OnCancel;
+                @Cancel.canceled -= instance.OnCancel;
+                @OpenOrCloseMenu.started -= instance.OnOpenOrCloseMenu;
+                @OpenOrCloseMenu.performed -= instance.OnOpenOrCloseMenu;
+                @OpenOrCloseMenu.canceled -= instance.OnOpenOrCloseMenu;
+            }
+
+            public void RemoveCallbacks(IUIMenuActions instance)
+            {
+                if (m_Wrapper.m_UIMenuActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IUIMenuActions instance)
+            {
+                foreach (var item in m_Wrapper.m_UIMenuActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_UIMenuActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public UIMenuActions @UIMenu => new UIMenuActions(this);
         private int m_KeyboardMouseSchemeIndex = -1;
         public InputControlScheme KeyboardMouseScheme
         {
@@ -1163,7 +1400,9 @@ namespace Project
         {
             void OnMove(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
-            void OnFire(InputAction.CallbackContext context);
+            void OnAttack(InputAction.CallbackContext context);
+            void OnRunOrDodge(InputAction.CallbackContext context);
+            void OnJump(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
@@ -1177,6 +1416,12 @@ namespace Project
             void OnRightClick(InputAction.CallbackContext context);
             void OnTrackedDevicePosition(InputAction.CallbackContext context);
             void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+        }
+        public interface IUIMenuActions
+        {
+            void OnSubmit(InputAction.CallbackContext context);
+            void OnCancel(InputAction.CallbackContext context);
+            void OnOpenOrCloseMenu(InputAction.CallbackContext context);
         }
     }
 }
