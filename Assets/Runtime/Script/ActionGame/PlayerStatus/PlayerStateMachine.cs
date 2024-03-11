@@ -9,18 +9,18 @@ namespace Project.ActionGame
     /// <summary>
     /// プレイヤーのステータス遷移
     /// </summary>
-    public class PlayerStateMachine : MonoBehaviour
+    public class PlayerStateMachine
     {
-        [SerializeField] private PlayerController controller;
+        private readonly PlayerController controller;
         private readonly PlayerStatusData playerStatusData = new PlayerStatusData();
 
         private Dictionary<PlayerStatus, PlayerStatusBase> playerStatusDictionary;
 
-        private void Start()
+        public PlayerStateMachine(PlayerController controller)
         {
-            Initialize();
+            this.controller = controller;
         }
-
+        
         public void Initialize()
         {
             playerStatusData.Initialize();
@@ -42,12 +42,12 @@ namespace Project.ActionGame
             playerStatusDictionary[playerStatusData.CurrentStatus].InStatus(PlayerStatus.None);
         }
 
-        private void FixedUpdate()
+        public void FixedUpdateState()
         {
             UpdateStatus(playerStatusDictionary[playerStatusData.CurrentStatus].FixedUpdate());
         }
 
-        private void Update()
+        public void UpdateState()
         {
             UpdateStatus(playerStatusDictionary[playerStatusData.CurrentStatus].Update());
         }

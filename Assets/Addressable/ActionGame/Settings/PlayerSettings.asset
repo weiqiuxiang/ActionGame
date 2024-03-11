@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
   moveInputDeadZone: 0.01
-  walkSpeed: 3
-  runSpeed: 5
-  dashSpeed: 7
+  walkSpeed: 1
+  runSpeed: 3
+  dashSpeed: 5
+  fallStartSpeed: 1
   walkInputThreshold: 0.7
   dodgeSpeed: 12
   dodgeSpeedCurve:
@@ -53,3 +54,5 @@ MonoBehaviour:
     m_RotationOrder: 4
   dodgeSecond: 2
   dodgeInvincibleSecond: 1
+  jumpHeight: 2
+  airMoveAcc: 3

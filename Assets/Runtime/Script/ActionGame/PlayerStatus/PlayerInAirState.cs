@@ -9,7 +9,12 @@ namespace Project.ActionGame
         public PlayerInAirStatus(PlayerController playerController) : base(playerController)
         {
         }
-        
+
+        public override void InStatus(PlayerStatus lastStatus)
+        {
+            
+        }
+
         public override PlayerStatus FixedUpdate()
         {
             playerController.AirMove();

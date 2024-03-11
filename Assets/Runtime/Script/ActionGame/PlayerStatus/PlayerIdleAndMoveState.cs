@@ -17,8 +17,7 @@ namespace Project
 
         public override void InStatus(PlayerStatus lastStatus)
         {
-            playerController.ResetInputValues();
-            playerController.SetMoveDirectionEqualPlayerDirection();
+            playerController.ResetInputVectorFromCamera();
         }
 
         public override void OutStatus()
@@ -35,7 +34,13 @@ namespace Project
         public override PlayerStatus Update()
         {
             // ジャンプか空中
-            if (playerController.IsInputJump || !playerController.IsOnGround)
+            if (playerController.IsInputJump)
+            {
+                playerController.Jump();
+                return PlayerStatus.InAir;
+            }
+
+            if (!playerController.IsOnGround)
             {
                 return PlayerStatus.InAir;
             }

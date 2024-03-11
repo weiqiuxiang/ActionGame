@@ -7,5 +7,10 @@ namespace Project.ActionGame
     public class PlayerAnimationController : MonoBehaviour
     {
         [SerializeField] private Animator playerAnimator;
+
+        public void Test()
+        {
+            
+        }
     }
 }

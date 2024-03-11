@@ -15,6 +15,7 @@ namespace Project.ActionGame
     {
         [Header("参照")] 
         [SerializeField] private PlayerSettings playerSettings;
+        [SerializeField] private ActionGameEnvironmentSetting environmentSetting;
         [SerializeField] private Transform playerTransform;
         [SerializeField] private Rigidbody rigidbody;
         [SerializeField] private PlayerAnimationController animationController;
@@ -23,8 +24,6 @@ namespace Project.ActionGame
 
         [Header("パラメータ")] 
         [SerializeField] private LayerMask groundLayer;
-        [SerializeField] private float fallAcc;
-        [SerializeField] private float fallSpeedMax;
         [SerializeField] private float maxSlopeAngle;
         [SerializeField] private float stepHeight;
         [SerializeField] private float stepDistance;
@@ -35,9 +34,9 @@ namespace Project.ActionGame
         private InputController inputController;
         
         private Vector2 inputVector = Vector2.zero;  // 入力ベクトル
-        private Vector3 moveVector = Vector3.zero;
+        private Vector3 inputVectorFromCamera = Vector3.zero;  // カメラに対する入力方向
         private float moveSpeed = 0;
-        private bool HasNoInput => Mathf.Approximately(moveSpeed, 0);
+        private bool HasNoInput => Mathf.Approximately(inputVector.x, 0) && Mathf.Approximately(inputVector.y, 0);
         private float fallSpeed = 0;
         
         public bool IsInputDash { get; private set; } = false;   // ダッシュ入力しているか
@@ -47,6 +46,13 @@ namespace Project.ActionGame
         public bool IsOnGround { get; private set; } = true;    // 地面と接触しているかどうか
         public bool IsDamaged { get; private set; } = false;    // ダメージを受けたか？
         public bool IsCanFall { get; set; } = true; // 自然落下発生するかどうか
+        private PlayerStateMachine playerStateMachine;
+
+        /// <summary>
+        /// ジャンプ後、しばらくのフレームで空中扱い
+        /// </summary>
+        private static readonly int NoCheckOnGroundFrame = 5;
+        private int noCheckOnGroundCount = 0;    
 
         private void Start()
         {
@@ -58,12 +64,18 @@ namespace Project.ActionGame
         /// </summary>
         public void Initalize()
         {
-            ResetInputValues();
+            if (playerStateMachine == null)
+            {
+                playerStateMachine = new PlayerStateMachine(this);
+            }
+            playerStateMachine.Initialize();
+            
+            InitializeFlags();
             InitializeInput();
             RegisterInput();
         }
 
-        public void ResetInputValues()
+        private void InitializeFlags()
         {
             IsInputDash = false;
             IsInputDodge = false;
@@ -71,6 +83,13 @@ namespace Project.ActionGame
             IsInputAttack = false;
             IsDamaged = false;
             IsCanFall = true;
+        }
+
+        private void ResetInputValuesAfterStateMachineUpdate()
+        {
+            IsInputDodge = false;
+            IsInputJump = false;
+            IsInputAttack = false;
         }
 
         public void ResetDodgeInput() => IsInputDodge = false;
@@ -88,9 +107,9 @@ namespace Project.ActionGame
 
         private void RegisterInput()
         {
-            inputController.Player.Move.started += Move;
-            inputController.Player.Move.performed += Move;
-            inputController.Player.Move.canceled += Move;
+            inputController.Player.Move.started += InputMove;
+            inputController.Player.Move.performed += InputMove;
+            inputController.Player.Move.canceled += InputMove;
 
             inputController.Player.Attack.performed += Attack;
             inputController.Player.Jump.performed += Jump;
@@ -119,7 +138,7 @@ namespace Project.ActionGame
         /// 移動入力
         /// </summary>
         /// <param name="context"></param>
-        private void Move(InputAction.CallbackContext context)
+        private void InputMove(InputAction.CallbackContext context)
         {
             inputVector = context.ReadValue<Vector2>();
         }
@@ -139,8 +158,13 @@ namespace Project.ActionGame
                 moveSpeed = IsInputDash ? playerSettings.DashSpeed :
                     (inputValue < playerSettings.WalkInputThreshold) ? playerSettings.WalkSpeed : playerSettings.RunSpeed;
             }
-
-            MoveCharacter();
+            
+            if (!HasNoInput)
+            {
+                CalcInputVectorFromCamera();
+            }
+            rigidbody.velocity = new Vector3(moveSpeed * inputVectorFromCamera.x, fallSpeed, moveSpeed * inputVectorFromCamera.z);
+            
             RotateCharacter();
         }
 
@@ -149,41 +173,47 @@ namespace Project.ActionGame
         /// </summary>
         public void AirMove()
         {
-            float inputValue = inputVector.magnitude;
-            if (inputValue < playerSettings.MoveInputDeadZone)
-            {
-                moveSpeed = 0;
-            }
-            else
-            {
-                moveSpeed = IsInputDash ? playerSettings.DashSpeed :
-                    (inputValue < playerSettings.WalkInputThreshold) ? playerSettings.WalkSpeed : playerSettings.RunSpeed;
-            }
+            rigidbody.velocity = rigidbody.velocity.SetY(fallSpeed);
 
-            MoveCharacter();
+            // 移動方向の速度を徐々減少
+            Vector3 reserve = -rigidbody.velocity.SetY(0).normalized;
+            rigidbody.velocity += Time.deltaTime * reserve * 0.1f * playerSettings.AirMoveAcc;
+            
+            if (HasNoInput) return;
+
+            // 空中入力で移動
+            CalcInputVectorFromCamera();
+            rigidbody.velocity += Time.deltaTime * new Vector3(inputVectorFromCamera.x * playerSettings.AirMoveAcc, 0, inputVectorFromCamera.z * playerSettings.AirMoveAcc);
         }
-        
-        private void MoveCharacter()
-        {
-            if (!HasNoInput)
-            {
-                moveVector = cameraTransform.forward * inputVector.y + cameraTransform.right * inputVector.x;
-                moveVector.y = 0;
-                moveVector = moveVector.normalized;
-            }
 
-            rigidbody.velocity = new Vector3(moveSpeed * moveVector.x, fallSpeed, moveSpeed * moveVector.z);
+        private void CalcInputVectorFromCamera()
+        {
+            inputVectorFromCamera = cameraTransform.forward * inputVector.y + cameraTransform.right * inputVector.x;
+            inputVectorFromCamera.y = 0;
+            inputVectorFromCamera = inputVectorFromCamera.normalized;
+        }
+
+        public void MoveToFall()
+        {
+            rigidbody.velocity = rigidbody.velocity.SetXZ(inputVectorFromCamera.x * playerSettings.FallStartSpeed, inputVectorFromCamera.z * playerSettings.FallStartSpeed);
+        }
+
+        public void Jump()
+        {
+            fallSpeed += Mathf.Sqrt(playerSettings.JumpHeight * environmentSetting.Gravity * 2);
+            IsOnGround = false;
+            noCheckOnGroundCount = NoCheckOnGroundFrame;
         }
 
         private void RotateCharacter()
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveVector, Vector3.up);
+            Quaternion targetRotation = Quaternion.LookRotation(inputVectorFromCamera, Vector3.up);
             playerTransform.rotation = Quaternion.Slerp(playerTransform.rotation, targetRotation, rotatePercentSecond * Time.deltaTime);
         }
 
-        public void SetMoveDirectionEqualPlayerDirection()
+        public void ResetInputVectorFromCamera()
         {
-            moveVector = playerTransform.forward;
+            inputVectorFromCamera = playerTransform.forward;
         }
 
         /// <summary>
@@ -235,57 +265,65 @@ namespace Project.ActionGame
 
         private void FixedUpdate()
         {
-            RaycastHit groundHit = Fall();
-            if (IsOnGround && !HasNoInput)
-            {
-                //CheckStep();
-            }
+            RaycastHit groundHit = CheckIsOnGround();
+            Fall();
+            
+            playerStateMachine.FixedUpdateState();
         }
 
         private void Update()
         {
-            //Debug.LogError(rigidbody.velocity);
+            playerStateMachine.UpdateState();
+
+            // 各入力をリセット
+            ResetInputValuesAfterStateMachineUpdate();
         }
 
         /// <summary>
-        /// 落下
+        /// 地面にいるかどうかチェック
         /// </summary>
-        private RaycastHit Fall()
+        private RaycastHit CheckIsOnGround()
         {
-            if (!IsCanFall) return default;
-
+            if (noCheckOnGroundCount > 0)
+            {
+                noCheckOnGroundCount--;
+                return default;
+            }
+            
             var bounds = playerCollider.bounds;
             float rayDistance = bounds.center.y - bounds.min.y + groundRayDistance;
             IsOnGround = Physics.Raycast(bounds.center, Vector3.down, out RaycastHit hit, rayDistance, groundLayer);
             
-            if (!IsOnGround)
-            {
-                AddFallSpeed();
-                return hit;
-            }
-
             // 地面上にいるが、浮いている状態を解消
             if (bounds.min.y - hit.point.y > 0.1f)
             {
                 rigidbody.position = rigidbody.position.AddY(-0.01f * Time.deltaTime);
             }
 
-            fallSpeed = 0;
-
             return hit;
+        }
+        
+        /// <summary>
+        /// 落下
+        /// </summary>
+        private void Fall()
+        {
+            if (!IsCanFall) return;
+            
+            if (!IsOnGround)
+            {
+                AddFallSpeed();
+                return;
+            }
+            
+            // 地面時落下速度を0に
+            fallSpeed = 0;
         }
 
         private void AddFallSpeed()
         {
-            fallSpeed -= fallAcc * Time.deltaTime;
-            fallSpeed = Mathf.Max(fallSpeed, -fallSpeedMax);
-        }
-
-        private void CheckStep()
-        {
-            Vector3 stepOffset = moveVector * moveSpeed * Time.deltaTime * stepDistance;
-            
-            
+            fallSpeed -= environmentSetting.Gravity * Time.deltaTime;
+            fallSpeed = Mathf.Max(fallSpeed, -environmentSetting.FallSpeedMax);
         }
         
 #if UNITY_EDITOR
