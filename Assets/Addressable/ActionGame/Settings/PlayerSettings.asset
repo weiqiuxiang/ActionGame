@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2d0cba8714bb54890eb492b10c1439, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  moveInputDeadZone: 0.01
+  moveInputDeadZone: 0.2
+  rotateSpeed: 8
   walkSpeed: 1
   runSpeed: 3
   dashSpeed: 5
@@ -32,27 +33,29 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.32930085
     - serializedVersion: 3
-      time: 0.8299279
-      value: 0.79014367
+      time: 0.5535419
+      value: 0.41515797
       inSlope: -0.8904176
-      outSlope: -1.4293374
+      outSlope: -0.8557089
       tangentMode: 1
       weightedMode: 0
       inWeight: 0.07854037
-      outWeight: 0.49116033
+      outWeight: 0.17147645
     - serializedVersion: 3
       time: 1
       value: -0.0000017993152
-      inSlope: -8.89242
-      outSlope: -8.89242
+      inSlope: 0.04673021
+      outSlope: 0.04673021
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.051744364
+      inWeight: 0.11304638
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  dodgeSecond: 2
+  dodgeSecond: 0.5
   dodgeInvincibleSecond: 1
+  dodgeRotateSpeed: 2
   jumpHeight: 2
+  jumpRotateSpeed: 16
   airMoveAcc: 3

@@ -25,6 +25,7 @@ namespace Project.ActionGame
         {
             if (playerController.IsOnGround)
             {
+                playerController.AnimationController.PlayLandGround();
                 return PlayerStatus.IdleAndMove;
             }
             return PlayerStatus.None;

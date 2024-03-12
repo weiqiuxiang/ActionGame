@@ -34,8 +34,9 @@ namespace Project.ActionGame
                 playerStatusDictionary = new Dictionary<PlayerStatus, PlayerStatusBase>();
                 
                 // 各state初期化
-                playerStatusDictionary.Add(PlayerStatus.IdleAndMove, new PlayerIdleAndMoveStatus(controller));
+                playerStatusDictionary.Add(PlayerStatus.IdleAndMove, new PlayerIdleAndMoveState(controller));
                 playerStatusDictionary.Add(PlayerStatus.InAir, new PlayerInAirStatus(controller));
+                playerStatusDictionary.Add(PlayerStatus.Dodge, new PlayerDodgeState(controller));
             }
             
             playerStatusData.SetStatus(PlayerStatus.IdleAndMove);
