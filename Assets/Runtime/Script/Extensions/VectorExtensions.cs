@@ -39,9 +39,23 @@ namespace Project.Extensions
             return vector;
         }
         
+        public static Vector3 SetXZ(this Vector3 vector, float xValue, float zValue)
+        {
+            vector.x = xValue;
+            vector.z = zValue;
+            return vector;
+        }
+        
         public static Vector3 AddY(this Vector3 vector, float value)
         {
             vector.y += value;
+            return vector;
+        }
+        
+        public static Vector3 AddXZ(this Vector3 vector, float xValue, float zValue)
+        {
+            vector.x += xValue;
+            vector.z += zValue;
             return vector;
         }
     }

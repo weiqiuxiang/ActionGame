@@ -1,24 +1,30 @@
-using System.Collections;
-using System.Collections.Generic;
-using Project.ActionGame;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-namespace Project
+namespace Project.ActionGame
 {
     /// <summary>
     /// 地面にいる時の動き、移動、ダッシュなどをコントロール
     /// </summary>
-    public class PlayerIdleAndMoveStatus : PlayerStatusBase
+    public class PlayerIdleAndMoveState : PlayerStatusBase
     {
-        public PlayerIdleAndMoveStatus(PlayerController playerController) : base(playerController)
+        /// <summary>
+        /// ジャンプは準備動作はあるので、準備動作後ジャンプに遷移
+        /// </summary>
+        private bool isMoveToJump = false;
+        private float moveToJumpTime = 0;
+        private readonly static float moveToJumpSecond = 0.165f;
+
+        private MoveStatus moveStatus;
+        
+        public PlayerIdleAndMoveState(PlayerController playerController) : base(playerController)
         {
         }
 
         public override void InStatus(PlayerStatus lastStatus)
         {
-            playerController.ResetInputValues();
-            playerController.SetMoveDirectionEqualPlayerDirection();
+            playerController.ResetInputVectorFromCamera();
+            isMoveToJump = false;
+            moveToJumpTime = 0;
         }
 
         public override void OutStatus()
@@ -28,15 +34,45 @@ namespace Project
 
         public override PlayerStatus FixedUpdate()
         {
-            playerController.Move();
+            if (isMoveToJump) return PlayerStatus.None;
+            moveStatus = playerController.Move();
+            if (moveStatus == MoveStatus.NoMove)
+            {
+                playerController.AnimationController.PlayIdle();
+            }
+            else
+            {
+                playerController.AnimationController.PlayMove(moveStatus);
+            }
             return PlayerStatus.None;
         }
 
         public override PlayerStatus Update()
         {
-            // ジャンプか空中
-            if (playerController.IsInputJump || !playerController.IsOnGround)
+            // ジャンプ準備が終わったら、ジャンプに遷移
+            if (isMoveToJump)
             {
+                moveToJumpTime += Time.deltaTime;
+                if (moveToJumpTime >= moveToJumpSecond)
+                {
+                    playerController.Jump(playerController.PlayerSettings.GetMoveSpeed(moveStatus));
+                    return PlayerStatus.InAir;
+                }
+                return PlayerStatus.None;
+            }
+            
+            if (playerController.IsInputJump)
+            {
+                isMoveToJump = true;
+                playerController.JumpReady();
+                playerController.AnimationController.PlayJump();
+                return PlayerStatus.None;
+            }
+
+            if (!playerController.IsOnGround)
+            {
+                playerController.AnimationController.PlayInAir();
+                playerController.ResetAirForward();
                 return PlayerStatus.InAir;
             }
 

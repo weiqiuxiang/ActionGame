@@ -13,4 +13,12 @@ namespace Project.ActionGame
         Dodge, // 回避中
         Damaged,    // 攻撃受けた後
     }
+    
+    public enum MoveStatus
+    {
+        NoMove = 0,
+        Walk,
+        Run,
+        Dash
+    }
 }

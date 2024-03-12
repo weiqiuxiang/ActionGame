@@ -62,7 +62,7 @@ namespace Project
                     ""id"": ""d7f37baf-d346-43ac-8ed3-ae616999fdc0"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold(duration=0.1)"",
+                    ""interactions"": ""Hold(duration=0.2)"",
                     ""initialStateCheck"": false
                 },
                 {

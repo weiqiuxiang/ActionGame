@@ -9,7 +9,12 @@ namespace Project.ActionGame
         public PlayerInAirStatus(PlayerController playerController) : base(playerController)
         {
         }
-        
+
+        public override void InStatus(PlayerStatus lastStatus)
+        {
+            
+        }
+
         public override PlayerStatus FixedUpdate()
         {
             playerController.AirMove();
@@ -20,6 +25,7 @@ namespace Project.ActionGame
         {
             if (playerController.IsOnGround)
             {
+                playerController.AnimationController.PlayLandGround();
                 return PlayerStatus.IdleAndMove;
             }
             return PlayerStatus.None;
