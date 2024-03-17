@@ -1,23 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Project.ActionGame
 {
-    public class PlayerInAirStatus : PlayerStatusBase
+    public class PlayerInAirState : PlayerStateBase
     {
-        public PlayerInAirStatus(PlayerController playerController) : base(playerController)
+        private Vector3 airForward; // 空中向き
+        
+        public PlayerInAirState(PlayerController playerController) : base(playerController)
         {
         }
 
-        public override void InStatus(PlayerStatus lastStatus)
+        public override void InStatus(PlayerStatus lastStatus, NextStateData data)
         {
-            
+            airForward = data.forward;
         }
 
         public override PlayerStatus FixedUpdate()
         {
-            playerController.AirMove();
+            playerController.AirMove(airForward);
             return PlayerStatus.None;
         }
 
@@ -25,7 +28,7 @@ namespace Project.ActionGame
         {
             if (playerController.IsOnGround)
             {
-                playerController.AnimationController.PlayLandGround();
+                playerController.AnimationController.PlayOnGround();
                 return PlayerStatus.IdleAndMove;
             }
             return PlayerStatus.None;

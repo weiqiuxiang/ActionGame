@@ -1,32 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Project.ActionGame
 {
-    public class PlayerDodgeState : PlayerStatusBase
+    public class PlayerDodgeState : PlayerStateBase
     {
         private float currentTime;
+        private Vector3 dodgeForward;
         
         public PlayerDodgeState(PlayerController playerController) : base(playerController)
         {
         }
         
-        public override void InStatus(PlayerStatus lastStatus)
+        public override void InStatus(PlayerStatus lastStatus, NextStateData data)
         {
+            dodgeForward = data.forward;
+            
             currentTime = 0;
-            playerController.ResetPlayerForward();
+            playerController.PlayerForwardEqualInputVectorFromCamera();
+            playerController.AnimationController.PlayDodge();
         }
 
         public override void OutStatus()
         {
-            
+            playerController.AnimationController.PlayExit();
         }
 
         public override PlayerStatus FixedUpdate()
         {
             currentTime += Time.deltaTime;
-            playerController.Dodge(currentTime);
+            dodgeForward = playerController.Dodge(currentTime, dodgeForward);
             return PlayerStatus.None;
         }
 
@@ -35,7 +40,7 @@ namespace Project.ActionGame
             if (!playerController.IsOnGround)
             {
                 playerController.AnimationController.PlayInAir();
-                playerController.ResetAirForward();
+                NextStateData.forward = playerController.GetPlayerForward();
                 return PlayerStatus.InAir;
             }
 

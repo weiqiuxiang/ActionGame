@@ -30,13 +30,12 @@ namespace Project.ActionGame
         [SerializeField] private float stepHeight;
         [SerializeField] private float stepDistance;
 
-        private readonly float groundRayDistance = 0.1f;
+        private readonly float groundRayDistance = 0.3f;
 
         private InputController inputController;
         
         private Vector2 inputVector = Vector2.zero;  // 入力ベクトル
         private Vector3 inputVectorFromCamera = Vector3.zero;  // カメラに対する入力方向
-        private Vector3 airForward;    // 空中の向き
         private float moveSpeed = 0;
         private bool HasNoInput => inputVector.magnitude < playerSettings.MoveInputDeadZone;
         private float fallSpeed = 0;
@@ -167,7 +166,7 @@ namespace Project.ActionGame
             rigidbody.velocity = new Vector3(moveSpeed * inputVectorFromCamera.x, fallSpeed, moveSpeed * inputVectorFromCamera.z);
             RotateCharacter(inputVectorFromCamera, playerSettings.RotateSpeed);
 
-            if (IsInputDash)
+            if (!isNoMove && IsInputDash)
             {
                 return MoveStatus.Dash;
             }
@@ -183,7 +182,7 @@ namespace Project.ActionGame
         /// <summary>
         /// 空中の移動
         /// </summary>
-        public void AirMove()
+        public void AirMove(Vector3 airForward)
         {
             rigidbody.velocity = rigidbody.velocity.SetY(fallSpeed);
 
@@ -200,17 +199,22 @@ namespace Project.ActionGame
             rigidbody.velocity += Time.deltaTime * new Vector3(inputVectorFromCamera.x * playerSettings.AirMoveAcc, 0, inputVectorFromCamera.z * playerSettings.AirMoveAcc);
         }
 
-        public void Dodge(float currentSecond)
+        public Vector3 Dodge(float currentSecond, Vector3 forward)
         {
             float percent = currentSecond / playerSettings.DodgeSecond;
-            moveSpeed = playerSettings.DodgeSpeedCurve.Evaluate(percent) * playerSettings.DodgeSpeed;
-            Vector3 forward = playerTransform.forward;
+            moveSpeed = Mathf.Max(0.0001f, playerSettings.DodgeSpeedCurve.Evaluate(percent) * playerSettings.DodgeSpeed);   // 速度は0にならないように、最小でも一定値以上
             rigidbody.velocity = new Vector3(moveSpeed * forward.x, fallSpeed, moveSpeed * forward.z);
+
+            if (!HasNoInput)
+            {
+                CalcInputVectorFromCamera();
+                rigidbody.velocity = rigidbody.velocity.AddXZ(inputVectorFromCamera.x * playerSettings.DodgeDragSpeed ,inputVectorFromCamera.z * playerSettings.DodgeDragSpeed);
+            }
             
-            if (HasNoInput) return;
-            
-            CalcInputVectorFromCamera();
-            RotateCharacter(inputVectorFromCamera, playerSettings.DodgeRotateSpeed);
+            // 向きは速度方向に向く
+            Vector3 resultForward = rigidbody.velocity.SetY(0).normalized;
+            RotateCharacter(resultForward, playerSettings.RotateSpeed);
+            return resultForward;
         }
 
         private void CalcInputVectorFromCamera()
@@ -225,18 +229,20 @@ namespace Project.ActionGame
             rigidbody.velocity = rigidbody.velocity.SetXZ(inputVectorFromCamera.x * playerSettings.FallStartSpeed, inputVectorFromCamera.z * playerSettings.FallStartSpeed);
         }
 
-        public void JumpReady()
+        public Vector3 JumpReady()
         {
             ResetMoveSpeed();
-            airForward = playerTransform.forward;
+            Vector3 airForward = playerTransform.forward;
             if (!HasNoInput)
             {
                 CalcInputVectorFromCamera();
                 airForward = inputVectorFromCamera;
             }
+
+            return airForward;
         }
 
-        public void Jump(float jumpStartSpeed)
+        public void Jump(float jumpStartSpeed, Vector3 airForward)
         {
             rigidbody.velocity = rigidbody.velocity.SetXZ(airForward.x * jumpStartSpeed, airForward.z * jumpStartSpeed);
             fallSpeed += Mathf.Sqrt(playerSettings.JumpHeight * environmentSetting.Gravity * 2);
@@ -255,7 +261,7 @@ namespace Project.ActionGame
             inputVectorFromCamera = playerTransform.forward;
         }
 
-        public void ResetPlayerForward()
+        public void PlayerForwardEqualInputVectorFromCamera()
         {
             playerTransform.forward = inputVectorFromCamera;
         }
@@ -265,10 +271,9 @@ namespace Project.ActionGame
             rigidbody.velocity = rigidbody.velocity.SetXZ(0, 0);
         }
         
-        public void ResetAirForward()
-        {
-            airForward = playerTransform.forward;
-        }
+        public Vector3 GetInputVectorFromCamera() => inputVectorFromCamera;
+
+        public Vector3 GetPlayerForward() => playerTransform.forward;
 
         /// <summary>
         /// 攻撃
@@ -349,9 +354,9 @@ namespace Project.ActionGame
             IsOnGround = Physics.Raycast(bounds.center, Vector3.down, out RaycastHit hit, rayDistance, groundLayer);
             
             // 地面上にいるが、浮いている状態を解消
-            if (bounds.min.y - hit.point.y > 0.1f)
+            if (bounds.min.y - hit.point.y > 0.05f)
             {
-                rigidbody.position = rigidbody.position.AddY(-0.01f * Time.deltaTime);
+                rigidbody.position = rigidbody.position.AddY(-1f * Time.deltaTime);
             }
 
             return hit;

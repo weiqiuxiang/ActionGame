@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Project.ActionGame
@@ -5,7 +6,7 @@ namespace Project.ActionGame
     /// <summary>
     /// 地面にいる時の動き、移動、ダッシュなどをコントロール
     /// </summary>
-    public class PlayerIdleAndMoveState : PlayerStatusBase
+    public class PlayerIdleAndMoveState : PlayerStateBase
     {
         /// <summary>
         /// ジャンプは準備動作はあるので、準備動作後ジャンプに遷移
@@ -20,7 +21,7 @@ namespace Project.ActionGame
         {
         }
 
-        public override void InStatus(PlayerStatus lastStatus)
+        public override void InStatus(PlayerStatus lastStatus, NextStateData data)
         {
             playerController.ResetInputVectorFromCamera();
             isMoveToJump = false;
@@ -55,7 +56,7 @@ namespace Project.ActionGame
                 moveToJumpTime += Time.deltaTime;
                 if (moveToJumpTime >= moveToJumpSecond)
                 {
-                    playerController.Jump(playerController.PlayerSettings.GetMoveSpeed(moveStatus));
+                    playerController.Jump(playerController.PlayerSettings.GetMoveSpeed(moveStatus), NextStateData.forward);
                     return PlayerStatus.InAir;
                 }
                 return PlayerStatus.None;
@@ -64,7 +65,7 @@ namespace Project.ActionGame
             if (playerController.IsInputJump)
             {
                 isMoveToJump = true;
-                playerController.JumpReady();
+                NextStateData.forward = playerController.JumpReady();
                 playerController.AnimationController.PlayJump();
                 return PlayerStatus.None;
             }
@@ -72,7 +73,7 @@ namespace Project.ActionGame
             if (!playerController.IsOnGround)
             {
                 playerController.AnimationController.PlayInAir();
-                playerController.ResetAirForward();
+                NextStateData.forward = playerController.GetPlayerForward();
                 return PlayerStatus.InAir;
             }
 
@@ -85,6 +86,7 @@ namespace Project.ActionGame
             // 回避
             if (playerController.IsInputDodge)
             {
+                NextStateData.forward = playerController.GetInputVectorFromCamera();
                 return PlayerStatus.Dodge;
             }
 
