@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Project.ActionGame
 {
-    public enum PlayerStatus
+    public enum PlayerState
     {
         None = 0,
         IdleAndMove, // Idleと移動

@@ -337,6 +337,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 561cd86e3354524408acd39e8098a9e8
+    m_Address: ActionGame/Settings/PlayerAttackSettings
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8e0c6ac69b4bc0f49a6ac0efe55328c9, type: 2}
   m_SchemaSet:

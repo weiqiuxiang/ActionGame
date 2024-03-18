@@ -16,6 +16,8 @@ namespace Project.ActionGame
         [Header("参照")] 
         [SerializeField] private PlayerSettings playerSettings;
         public PlayerSettings PlayerSettings => playerSettings;
+        [SerializeField] private PlayerAttackSettings playerAttackSettings;
+        public PlayerAttackSettings PlayerAttackSettings => playerAttackSettings;
         [SerializeField] private ActionGameEnvironmentSetting environmentSetting;
         [SerializeField] private Transform playerTransform;
         [SerializeField] private Rigidbody rigidbody;
@@ -181,6 +183,7 @@ namespace Project.ActionGame
 
         /// <summary>
         /// 空中の移動
+        /// *毎フレーム更新
         /// </summary>
         public void AirMove(Vector3 airForward)
         {
@@ -199,6 +202,13 @@ namespace Project.ActionGame
             rigidbody.velocity += Time.deltaTime * new Vector3(inputVectorFromCamera.x * playerSettings.AirMoveAcc, 0, inputVectorFromCamera.z * playerSettings.AirMoveAcc);
         }
 
+        /// <summary>
+        /// 回避
+        /// *毎フレーム更新
+        /// </summary>
+        /// <param name="currentSecond"></param>
+        /// <param name="forward"></param>
+        /// <returns></returns>
         public Vector3 Dodge(float currentSecond, Vector3 forward)
         {
             float percent = currentSecond / playerSettings.DodgeSecond;
@@ -217,6 +227,23 @@ namespace Project.ActionGame
             return resultForward;
         }
 
+        /// <summary>
+        /// 攻撃
+        /// *毎フレーム更新
+        /// </summary>
+        /// <param name="attackType"></param>
+        /// <param name="percent"></param>
+        /// <param name="forward"></param>
+        /// <returns></returns>
+        public void Attack(int attackType, float percent, Vector3 forward)
+        {
+            PlayerAttackData data = playerAttackSettings.AttackData[attackType - 1];
+            
+            moveSpeed = Mathf.Max(0.0001f, data.MoveSpeedCurve.Evaluate(percent) * data.MoveSpeed);   // 速度は0にならないように、最小でも一定値以上
+            rigidbody.velocity = new Vector3(moveSpeed * forward.x, fallSpeed, moveSpeed * forward.z);
+            RotateCharacter(forward, playerAttackSettings.AttackRotateSpeed);
+        }
+
         private void CalcInputVectorFromCamera()
         {
             inputVectorFromCamera = cameraTransform.forward * inputVector.y + cameraTransform.right * inputVector.x;
@@ -229,20 +256,33 @@ namespace Project.ActionGame
             rigidbody.velocity = rigidbody.velocity.SetXZ(inputVectorFromCamera.x * playerSettings.FallStartSpeed, inputVectorFromCamera.z * playerSettings.FallStartSpeed);
         }
 
+        /// <summary>
+        /// ジャンプ準備
+        /// </summary>
+        /// <returns>ジャンプする方向</returns>
         public Vector3 JumpReady()
         {
             ResetMoveSpeed();
-            Vector3 airForward = playerTransform.forward;
+            return GetInputForward();
+        }
+
+        /// <summary>
+        /// 入力による移動方向を取得、入力がない場合、キャラの向きを返す
+        /// </summary>
+        /// <returns></returns>
+        public Vector3 GetInputForward()
+        {
+            Vector3 forward = playerTransform.forward;
             if (!HasNoInput)
             {
                 CalcInputVectorFromCamera();
-                airForward = inputVectorFromCamera;
+                forward = inputVectorFromCamera;
             }
 
-            return airForward;
+            return forward;
         }
 
-        public void Jump(float jumpStartSpeed, Vector3 airForward)
+        public void JumpStart(float jumpStartSpeed, Vector3 airForward)
         {
             rigidbody.velocity = rigidbody.velocity.SetXZ(airForward.x * jumpStartSpeed, airForward.z * jumpStartSpeed);
             fallSpeed += Mathf.Sqrt(playerSettings.JumpHeight * environmentSetting.Gravity * 2);

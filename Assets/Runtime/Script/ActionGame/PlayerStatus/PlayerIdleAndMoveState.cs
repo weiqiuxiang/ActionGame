@@ -21,21 +21,16 @@ namespace Project.ActionGame
         {
         }
 
-        public override void InStatus(PlayerStatus lastStatus, NextStateData data)
+        public override void InStatus(PlayerState previousState, PlayerStateData receiveData)
         {
             playerController.ResetInputVectorFromCamera();
             isMoveToJump = false;
             moveToJumpTime = 0;
         }
 
-        public override void OutStatus()
+        public override PlayerState FixedUpdate()
         {
-            
-        }
-
-        public override PlayerStatus FixedUpdate()
-        {
-            if (isMoveToJump) return PlayerStatus.None;
+            if (isMoveToJump) return PlayerState.None;
             moveStatus = playerController.Move();
             if (moveStatus == MoveStatus.NoMove)
             {
@@ -45,10 +40,10 @@ namespace Project.ActionGame
             {
                 playerController.AnimationController.PlayMove(moveStatus);
             }
-            return PlayerStatus.None;
+            return PlayerState.None;
         }
 
-        public override PlayerStatus Update()
+        public override PlayerState Update()
         {
             // ジャンプ準備が終わったら、ジャンプに遷移
             if (isMoveToJump)
@@ -56,10 +51,10 @@ namespace Project.ActionGame
                 moveToJumpTime += Time.deltaTime;
                 if (moveToJumpTime >= moveToJumpSecond)
                 {
-                    playerController.Jump(playerController.PlayerSettings.GetMoveSpeed(moveStatus), NextStateData.forward);
-                    return PlayerStatus.InAir;
+                    playerController.JumpStart(playerController.PlayerSettings.GetMoveSpeed(moveStatus), NextStateData.forward);
+                    return PlayerState.InAir;
                 }
-                return PlayerStatus.None;
+                return PlayerState.None;
             }
             
             if (playerController.IsInputJump)
@@ -67,36 +62,37 @@ namespace Project.ActionGame
                 isMoveToJump = true;
                 NextStateData.forward = playerController.JumpReady();
                 playerController.AnimationController.PlayJump();
-                return PlayerStatus.None;
+                return PlayerState.None;
             }
 
             if (!playerController.IsOnGround)
             {
                 playerController.AnimationController.PlayInAir();
                 NextStateData.forward = playerController.GetPlayerForward();
-                return PlayerStatus.InAir;
+                return PlayerState.InAir;
             }
 
             // ダメージ受け
             if (playerController.IsDamaged)
             {
-                return PlayerStatus.Damaged;
+                return PlayerState.Damaged;
             }
 
             // 回避
             if (playerController.IsInputDodge)
             {
-                NextStateData.forward = playerController.GetInputVectorFromCamera();
-                return PlayerStatus.Dodge;
+                NextStateData.forward = playerController.GetInputForward();
+                return PlayerState.Dodge;
             }
 
             // 攻撃
             if (playerController.IsInputAttack)
             {
-                //return PlayerStatus.Attack; 
+                NextStateData.forward = playerController.GetInputForward();
+                return PlayerState.Attack; 
             }
 
-            return PlayerStatus.None;
+            return PlayerState.None;
         }
     }
 }

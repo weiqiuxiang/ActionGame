@@ -13,25 +13,25 @@ namespace Project.ActionGame
         {
         }
 
-        public override void InStatus(PlayerStatus lastStatus, NextStateData data)
+        public override void InStatus(PlayerState previousState, PlayerStateData receiveData)
         {
-            airForward = data.forward;
+            airForward = receiveData.forward;
         }
 
-        public override PlayerStatus FixedUpdate()
+        public override PlayerState FixedUpdate()
         {
             playerController.AirMove(airForward);
-            return PlayerStatus.None;
+            return PlayerState.None;
         }
 
-        public override PlayerStatus Update()
+        public override PlayerState Update()
         {
             if (playerController.IsOnGround)
             {
                 playerController.AnimationController.PlayOnGround();
-                return PlayerStatus.IdleAndMove;
+                return PlayerState.IdleAndMove;
             }
-            return PlayerStatus.None;
+            return PlayerState.None;
         }
     }
 }

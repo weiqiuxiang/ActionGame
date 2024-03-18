@@ -8,9 +8,10 @@ using UnityEngine.InputSystem;
 namespace Project.ActionGame
 {
     /// <summary>
-    /// 次のステータスにパスするデータ、必要に応じて変数を増やしてください
+    /// ステータス遷移時に渡すデータ
+    /// *必要に応じて変数を増やしてください
     /// </summary>
-    public class NextStateData
+    public class PlayerStateData
     {
         public Vector3 forward;
 
@@ -26,39 +27,39 @@ namespace Project.ActionGame
     public abstract class PlayerStateBase
     {
         protected readonly PlayerController playerController;
-        public NextStateData NextStateData { get; }
+        public PlayerStateData NextStateData { get; }
 
         public PlayerStateBase(PlayerController playerController)
         {
             this.playerController = playerController;
-            NextStateData = new NextStateData();
+            NextStateData = new PlayerStateData();
         }
 
         /// <summary>
         /// ステータスに入った時
         /// </summary>
-        /// <param name="lastStatus"></param>
-        /// <param name="data"></param>
-        public virtual void InStatus(PlayerStatus lastStatus, NextStateData data) { }
+        /// <param name="previousState"></param>
+        /// <param name="receiveData"></param>
+        public virtual void InStatus(PlayerState previousState, PlayerStateData receiveData) { }
 
         /// <summary>
         /// ステータスを抜けた時
         /// </summary>
         public virtual void OutStatus()
         {
-            NextStateData.Reset();
+            
         }
 
         /// <summary>
         /// FixedUpdate用
         /// </summary>
         /// <returns></returns>
-        public virtual PlayerStatus FixedUpdate() => PlayerStatus.None;
+        public virtual PlayerState FixedUpdate() => PlayerState.None;
 
         /// <summary>
         /// Update用
         /// </summary>
         /// <returns></returns>
-        public virtual PlayerStatus Update() => PlayerStatus.None;
+        public virtual PlayerState Update() => PlayerState.None;
     }
 }

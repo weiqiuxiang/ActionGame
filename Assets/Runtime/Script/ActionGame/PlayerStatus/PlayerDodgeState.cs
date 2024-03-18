@@ -14,9 +14,9 @@ namespace Project.ActionGame
         {
         }
         
-        public override void InStatus(PlayerStatus lastStatus, NextStateData data)
+        public override void InStatus(PlayerState previousState, PlayerStateData receiveData)
         {
-            dodgeForward = data.forward;
+            dodgeForward = receiveData.forward;
             
             currentTime = 0;
             playerController.PlayerForwardEqualInputVectorFromCamera();
@@ -25,34 +25,36 @@ namespace Project.ActionGame
 
         public override void OutStatus()
         {
+            base.OutStatus();
             playerController.AnimationController.PlayExit();
         }
 
-        public override PlayerStatus FixedUpdate()
+        public override PlayerState FixedUpdate()
         {
-            currentTime += Time.deltaTime;
             dodgeForward = playerController.Dodge(currentTime, dodgeForward);
-            return PlayerStatus.None;
+            return PlayerState.None;
         }
 
-        public override PlayerStatus Update()
+        public override PlayerState Update()
         {
+            currentTime += Time.deltaTime;
+            
             if (!playerController.IsOnGround)
             {
                 playerController.AnimationController.PlayInAir();
                 NextStateData.forward = playerController.GetPlayerForward();
-                return PlayerStatus.InAir;
+                return PlayerState.InAir;
             }
 
             if (currentTime >= playerController.PlayerSettings.DodgeSecond)
             {
-                return PlayerStatus.IdleAndMove;
+                return PlayerState.IdleAndMove;
             }
 
             // ダメージ受け
             if (playerController.IsDamaged)
             {
-                return PlayerStatus.Damaged;
+                return PlayerState.Damaged;
             }
 
             // 攻撃
@@ -61,7 +63,7 @@ namespace Project.ActionGame
                 //return PlayerStatus.Attack; 
             }
 
-            return PlayerStatus.None;
+            return PlayerState.None;
         }
     }
 }

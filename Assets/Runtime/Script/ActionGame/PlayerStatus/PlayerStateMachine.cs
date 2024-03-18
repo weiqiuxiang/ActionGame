@@ -14,7 +14,7 @@ namespace Project.ActionGame
         private readonly PlayerController controller;
         private readonly PlayerStatusData playerStatusData = new PlayerStatusData();
 
-        private Dictionary<PlayerStatus, PlayerStateBase> playerStatusDictionary;
+        private Dictionary<PlayerState, PlayerStateBase> playerStatusDictionary;
 
         public PlayerStateMachine(PlayerController controller)
         {
@@ -31,35 +31,37 @@ namespace Project.ActionGame
         {
             if (playerStatusDictionary == null)
             {
-                playerStatusDictionary = new Dictionary<PlayerStatus, PlayerStateBase>();
+                playerStatusDictionary = new Dictionary<PlayerState, PlayerStateBase>();
                 
                 // 各state初期化
-                playerStatusDictionary.Add(PlayerStatus.IdleAndMove, new PlayerIdleAndMoveState(controller));
-                playerStatusDictionary.Add(PlayerStatus.InAir, new PlayerInAirState(controller));
-                playerStatusDictionary.Add(PlayerStatus.Dodge, new PlayerDodgeState(controller));
+                playerStatusDictionary.Add(PlayerState.IdleAndMove, new PlayerIdleAndMoveState(controller));
+                playerStatusDictionary.Add(PlayerState.InAir, new PlayerInAirState(controller));
+                playerStatusDictionary.Add(PlayerState.Dodge, new PlayerDodgeState(controller));
+                playerStatusDictionary.Add(PlayerState.Attack, new PlayerAttackState(controller));
             }
             
-            playerStatusData.SetStatus(PlayerStatus.IdleAndMove);
-            playerStatusDictionary[playerStatusData.CurrentStatus].InStatus(PlayerStatus.None, null);
+            playerStatusData.SetStatus(PlayerState.IdleAndMove);
+            playerStatusDictionary[playerStatusData.CurrentState].InStatus(PlayerState.None, null);
         }
 
         public void FixedUpdateState()
         {
-            UpdateStatus(playerStatusDictionary[playerStatusData.CurrentStatus].FixedUpdate());
+            UpdateStatus(playerStatusDictionary[playerStatusData.CurrentState].FixedUpdate());
         }
 
         public void UpdateState()
         {
-            UpdateStatus(playerStatusDictionary[playerStatusData.CurrentStatus].Update());
+            UpdateStatus(playerStatusDictionary[playerStatusData.CurrentState].Update());
         }
 
-        private void UpdateStatus(PlayerStatus newStatus)
+        private void UpdateStatus(PlayerState newState)
         {
-            if (newStatus == PlayerStatus.None) return;
-            playerStatusDictionary[playerStatusData.CurrentStatus].OutStatus();
-            PlayerStatus lastStatus = playerStatusData.CurrentStatus;
-            playerStatusData.SetStatus(newStatus);
-            playerStatusDictionary[playerStatusData.CurrentStatus].InStatus(lastStatus, playerStatusDictionary[lastStatus].NextStateData);
+            if (newState == PlayerState.None) return;
+            playerStatusDictionary[playerStatusData.CurrentState].OutStatus();
+            PlayerState lastState = playerStatusData.CurrentState;
+            playerStatusData.SetStatus(newState);
+            playerStatusDictionary[playerStatusData.CurrentState].InStatus(lastState, playerStatusDictionary[lastState].NextStateData);
+            playerStatusDictionary[lastState].NextStateData.Reset();  // 遷移先にデータを渡す後、リセットする
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Project.ActionGame;
 using UnityEngine;
 
-namespace Project
+namespace Project.ActionGame
 {
     /// <summary>
     /// プレイヤーの設定データ
