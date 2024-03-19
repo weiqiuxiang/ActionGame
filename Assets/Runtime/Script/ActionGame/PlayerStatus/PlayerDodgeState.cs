@@ -20,13 +20,7 @@ namespace Project.ActionGame
             
             currentTime = 0;
             playerController.PlayerForwardEqualInputVectorFromCamera();
-            playerController.AnimationController.PlayDodge();
-        }
-
-        public override void OutStatus()
-        {
-            base.OutStatus();
-            playerController.AnimationController.PlayExit();
+            animationController.PlayDodge();
         }
 
         public override PlayerState FixedUpdate()
@@ -41,7 +35,7 @@ namespace Project.ActionGame
             
             if (!playerController.IsOnGround)
             {
-                playerController.AnimationController.PlayInAir();
+                animationController.PlayJumpIdle();
                 NextStateData.forward = playerController.GetPlayerForward();
                 return PlayerState.InAir;
             }

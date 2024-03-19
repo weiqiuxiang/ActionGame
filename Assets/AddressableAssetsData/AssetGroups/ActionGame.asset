@@ -318,7 +318,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 11696ec79b6440747a1af8b88988bf7a
-    m_Address: ActionGame/Animation/UnityChan
+    m_Address: ActionGame/Animation/UnityChanMecanim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -339,6 +339,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 561cd86e3354524408acd39e8098a9e8
     m_Address: ActionGame/Settings/PlayerAttackSettings
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc3ca59f31f9fae45914a0bae9ffe28c
+    m_Address: ActionGame/Animation/UnityChan
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

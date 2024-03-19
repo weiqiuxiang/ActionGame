@@ -28,7 +28,8 @@ namespace Project.ActionGame
         {
             if (playerController.IsOnGround)
             {
-                playerController.AnimationController.PlayOnGround();
+                animationController.PlayAnimationList(new []{PlayerAnimationController.JumpLand}, 
+                    new []{PlayerAnimationController.Idle}, true);
                 return PlayerState.IdleAndMove;
             }
             return PlayerState.None;

@@ -22,7 +22,6 @@ namespace Project.ActionGame
         [SerializeField] private Transform playerTransform;
         [SerializeField] private Rigidbody rigidbody;
         [SerializeField] private PlayerAnimationController animationController;
-        public PlayerAnimationController AnimationController => animationController;
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private CapsuleCollider playerCollider;
 
@@ -57,7 +56,7 @@ namespace Project.ActionGame
         private static readonly int NoCheckOnGroundFrame = 5;
         private int noCheckOnGroundCount = 0;    
 
-        private void Start()
+        private void Awake()
         {
             Initalize();
         }
@@ -72,6 +71,7 @@ namespace Project.ActionGame
                 playerStateMachine = new PlayerStateMachine(this);
             }
             playerStateMachine.Initialize();
+            animationController.Initialize();
             
             InitializeFlags();
             InitializeInput();
@@ -96,6 +96,8 @@ namespace Project.ActionGame
         }
 
         public void ResetDodgeInput() => IsInputDodge = false;
+        
+        public PlayerAnimationController GetAnimationController() => animationController;
 
         private void InitializeInput()
         {
@@ -237,7 +239,7 @@ namespace Project.ActionGame
         /// <returns></returns>
         public void Attack(int attackType, float percent, Vector3 forward)
         {
-            PlayerAttackData data = playerAttackSettings.AttackData[attackType - 1];
+            PlayerAttackData data = playerAttackSettings.AttackData[attackType];
             
             moveSpeed = Mathf.Max(0.0001f, data.MoveSpeedCurve.Evaluate(percent) * data.MoveSpeed);   // 速度は0にならないように、最小でも一定値以上
             rigidbody.velocity = new Vector3(moveSpeed * forward.x, fallSpeed, moveSpeed * forward.z);

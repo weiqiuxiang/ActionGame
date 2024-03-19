@@ -43,7 +43,7 @@ MonoBehaviour:
     startCancelPercent: 0.3
     endCancelPercent: 0.7
     toNextAttackPercent: 0.5
-  - second: 0.85
+  - second: 0.7
     moveSpeed: 1.7
     moveSpeedCurve:
       serializedVersion: 2
@@ -81,7 +81,7 @@ MonoBehaviour:
     startCancelPercent: 0.3
     endCancelPercent: 0.7
     toNextAttackPercent: 0.5
-  - second: 0.7
+  - second: 0.5
     moveSpeed: 3
     moveSpeedCurve:
       serializedVersion: 2

@@ -25,18 +25,18 @@ namespace Project.ActionGame
         {
             attackForward = receiveData.forward;
             
-            attackType = 1;    // 攻撃初段の値は1
+            attackType = 0;
             attackTypeMax = playerController.PlayerAttackSettings.AttackData.Length;
             ResetNextAction();
             SetTime();
             
-            playerController.AnimationController.PlayAttack(attackType);
-            playerController.AnimationController.SetHoldWeaponLayerWeight(0);
+            animationController.PlayAttack(attackType);
+            animationController.SetHoldWeaponLayerWeight(0);
         }
 
         public override void OutStatus()
         {
-            playerController.AnimationController.SetHoldWeaponLayerWeight(1);
+            animationController.SetHoldWeaponLayerWeight(1);
         }
 
         public override PlayerState FixedUpdate()
@@ -60,12 +60,10 @@ namespace Project.ActionGame
                     ResetNextAction();
                     SetTime();
                     
-                    playerController.AnimationController.PlayExit();
-                    playerController.AnimationController.PlayAttack(attackType);
+                    animationController.PlayAttack(attackType);
                 }
                 else
                 {
-                    playerController.AnimationController.PlayExit();
                     return PlayerState.IdleAndMove;
                 }
             }
@@ -73,7 +71,7 @@ namespace Project.ActionGame
             if (!playerController.IsOnGround)
             {
                 NextStateData.forward = playerController.GetPlayerForward();
-                playerController.AnimationController.PlayInAir();
+                animationController.PlayJumpIdle();
                 return PlayerState.InAir;
             }
 
@@ -88,7 +86,7 @@ namespace Project.ActionGame
 
         private void UpdateNextAction()
         {
-            var data = playerController.PlayerAttackSettings.AttackData[attackType - 1];
+            var data = playerController.PlayerAttackSettings.AttackData[attackType];
             
             // 回避にキャンセルするかをチェック
             bool hasDodge = (timePercent <= data.StartCancelPercent || timePercent >= data.EndCancelPercent) && playerController.IsInputDodge;
@@ -115,7 +113,7 @@ namespace Project.ActionGame
         
         private void SetTime()
         {
-            currentSecond = playerController.PlayerAttackSettings.AttackData[attackType - 1].Second;
+            currentSecond = playerController.PlayerAttackSettings.AttackData[attackType].Second;
             currentSecondCount = 0;
             timePercent = 0;
         }

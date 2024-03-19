@@ -27,11 +27,13 @@ namespace Project.ActionGame
     public abstract class PlayerStateBase
     {
         protected readonly PlayerController playerController;
+        protected readonly PlayerAnimationController animationController;
         public PlayerStateData NextStateData { get; }
 
         public PlayerStateBase(PlayerController playerController)
         {
             this.playerController = playerController;
+            animationController = playerController.GetAnimationController();
             NextStateData = new PlayerStateData();
         }
 

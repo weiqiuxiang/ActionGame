@@ -34,11 +34,11 @@ namespace Project.ActionGame
             moveStatus = playerController.Move();
             if (moveStatus == MoveStatus.NoMove)
             {
-                playerController.AnimationController.PlayIdle();
+                animationController.PlayIdle();
             }
             else
             {
-                playerController.AnimationController.PlayMove(moveStatus);
+                animationController.PlayMove(moveStatus);
             }
             return PlayerState.None;
         }
@@ -61,13 +61,15 @@ namespace Project.ActionGame
             {
                 isMoveToJump = true;
                 NextStateData.forward = playerController.JumpReady();
-                playerController.AnimationController.PlayJump();
+                animationController.PlayAnimationList(
+                    new []{PlayerAnimationController.JumpReady, PlayerAnimationController.JumpUp, PlayerAnimationController.JumpIdle}, 
+                    new []{PlayerAnimationController.JumpLand});
                 return PlayerState.None;
             }
 
             if (!playerController.IsOnGround)
             {
-                playerController.AnimationController.PlayInAir();
+                animationController.PlayJumpIdle();
                 NextStateData.forward = playerController.GetPlayerForward();
                 return PlayerState.InAir;
             }
