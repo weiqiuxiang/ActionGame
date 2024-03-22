@@ -32,7 +32,7 @@ namespace Project.ActionGame
         
         public static readonly int Dodge = Animator.StringToHash("Dodge");
 
-        public static readonly int MaxAttackStateHashes = 10;   // 攻撃ハッシュ配列の最大数
+        private static readonly int MaxAttackStateHashes = 10;   // 攻撃ハッシュ配列の最大数
         private int[] attackStateHashes;
 
         private int currentState = 0;
@@ -48,13 +48,11 @@ namespace Project.ActionGame
         public void Initialize()
         {
             currentState = Idle;
-            if (attackStateHashes == null)
+            
+            attackStateHashes = new int[MaxAttackStateHashes];
+            for (int i = 0; i < attackStateHashes.Length; i++)
             {
-                attackStateHashes = new int[MaxAttackStateHashes];
-                for (int i = 0; i < attackStateHashes.Length; i++)
-                {
-                    attackStateHashes[i] = Animator.StringToHash($"Attack{i:D2}");
-                }
+                attackStateHashes[i] = Animator.StringToHash($"Attack{i:D2}");
             }
         }
         

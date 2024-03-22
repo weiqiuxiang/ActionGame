@@ -73,6 +73,15 @@ namespace Project
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""41da2ab9-d583-461b-9ea9-261b0d067403"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -326,6 +335,28 @@ namespace Project
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c8608c3f-9b86-4b72-a0b8-057bfdebbc0b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dfd78fe2-93ad-4d1c-acc7-6b84f941b074"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""LockOn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1019,6 +1050,7 @@ namespace Project
             m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
             m_Player_RunOrDodge = m_Player.FindAction("RunOrDodge", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+            m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1102,6 +1134,7 @@ namespace Project
         private readonly InputAction m_Player_Attack;
         private readonly InputAction m_Player_RunOrDodge;
         private readonly InputAction m_Player_Jump;
+        private readonly InputAction m_Player_LockOn;
         public struct PlayerActions
         {
             private @InputController m_Wrapper;
@@ -1111,6 +1144,7 @@ namespace Project
             public InputAction @Attack => m_Wrapper.m_Player_Attack;
             public InputAction @RunOrDodge => m_Wrapper.m_Player_RunOrDodge;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
+            public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1135,6 +1169,9 @@ namespace Project
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @LockOn.started += instance.OnLockOn;
+                @LockOn.performed += instance.OnLockOn;
+                @LockOn.canceled += instance.OnLockOn;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1154,6 +1191,9 @@ namespace Project
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
+                @LockOn.started -= instance.OnLockOn;
+                @LockOn.performed -= instance.OnLockOn;
+                @LockOn.canceled -= instance.OnLockOn;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1403,6 +1443,7 @@ namespace Project
             void OnAttack(InputAction.CallbackContext context);
             void OnRunOrDodge(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnLockOn(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

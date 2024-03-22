@@ -24,6 +24,7 @@ namespace Project.ActionGame
         [SerializeField] private PlayerAnimationController animationController;
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private CapsuleCollider playerCollider;
+        [SerializeField] private PlayerCameraController cameraController;
 
         [Header("パラメータ")] 
         [SerializeField] private LayerMask groundLayer;
@@ -121,6 +122,8 @@ namespace Project.ActionGame
             
             inputController.Player.RunOrDodge.performed += RunOrDodge;
             inputController.Player.RunOrDodge.canceled += RunOrDodge;
+
+            inputController.Player.LockOn.performed += LockOn;
         }
 
         /// <summary>
@@ -363,6 +366,15 @@ namespace Project.ActionGame
                 IsInputDash = false;
             }
         }
+        
+        private void LockOn(InputAction.CallbackContext context)
+        {
+            // interactionはholdなので、走るボタンを一定時間以上押すと、走る
+            if (context.performed)
+            {
+                cameraController.LockOn();
+            }
+        }
 
         private void FixedUpdate()
         {
@@ -375,6 +387,7 @@ namespace Project.ActionGame
         private void Update()
         {
             playerStateMachine.UpdateState();
+            cameraController.CheckLockOnRelease();
 
             // 各入力をリセット
             ResetInputValuesAfterStateMachineUpdate();
