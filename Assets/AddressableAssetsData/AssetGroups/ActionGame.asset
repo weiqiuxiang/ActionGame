@@ -347,6 +347,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14840665a9ea91141ad7d5a854e7b622
+    m_Address: ActionGame/Material/LockOnSprite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 8e0c6ac69b4bc0f49a6ac0efe55328c9, type: 2}
   m_SchemaSet:

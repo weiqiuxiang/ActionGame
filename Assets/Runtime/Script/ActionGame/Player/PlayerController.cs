@@ -156,39 +156,39 @@ namespace Project.ActionGame
         /// <summary>
         /// 移動処理
         /// </summary>
-        public MoveStatus Move()
+        public void Move(MoveStatus moveStatus)
         {
-            float inputValue = inputVector.magnitude;
-            bool isRun = inputValue >= playerSettings.WalkInputThreshold;
-            bool isNoMove = inputValue < playerSettings.MoveInputDeadZone;
-            if (isNoMove)
+            moveSpeed = playerSettings.GetMoveSpeed(moveStatus);
+            if (moveStatus != MoveStatus.Idle)
             {
-                moveSpeed = 0;
-            }
-            else
-            {
-                moveSpeed = IsInputDash ? playerSettings.DashSpeed :
-                    isRun ? playerSettings.RunSpeed : playerSettings.WalkSpeed;
                 CalcInputVectorFromCamera();
             }
             
             rigidbody.velocity = new Vector3(moveSpeed * inputVectorFromCamera.x, fallSpeed, moveSpeed * inputVectorFromCamera.z);
-            bool isDash = !isNoMove && IsInputDash;
-            
+            bool isDash = moveStatus == MoveStatus.Dash;
             RotateCharacter(cameraController.IsLockOn && !isDash? 
                 cameraController.VectorToTarget(true).normalized : inputVectorFromCamera, playerSettings.RotateSpeed);
+        }
 
-            if (isDash)
+        public MoveStatus GetMoveStatusByInputVector()
+        {
+            float inputValue = inputVector.magnitude;
+            if (inputValue < playerSettings.MoveInputDeadZone)
+            {
+                return MoveStatus.Idle;
+            }
+            
+            if (IsInputDash)
             {
                 return MoveStatus.Dash;
             }
 
-            if (isRun)
+            if (inputValue >= playerSettings.WalkInputThreshold)
             {
                 return MoveStatus.Run;
             }
 
-            return isNoMove ? MoveStatus.Idle : MoveStatus.Walk;
+            return MoveStatus.Walk;
         }
 
         /// <summary>

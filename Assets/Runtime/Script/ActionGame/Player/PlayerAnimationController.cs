@@ -20,26 +20,25 @@ namespace Project.ActionGame
         private CancellationTokenSource animationListPlayCancelToken;
         
         // アニメーターのParameters
+        public static readonly int Dash = Animator.StringToHash("Dash");
         public static readonly int Idle = Animator.StringToHash("Idle");
         public static readonly int Walk = Animator.StringToHash("Walk");
         public static readonly int Run = Animator.StringToHash("Run");
-        public static readonly int Dash = Animator.StringToHash("Dash");
-        public static readonly int IdleAndMove = Animator.StringToHash("IdleAndMove");
-        public static readonly int MoveX = Animator.StringToHash("MoveX");
-        public static readonly int MoveY = Animator.StringToHash("MoveY");
-        
         public static readonly int JumpReady = Animator.StringToHash("JumpReady");
         public static readonly int JumpUp = Animator.StringToHash("JumpUp");
         public static readonly int JumpIdle = Animator.StringToHash("JumpIdle");
         public static readonly int JumpLand = Animator.StringToHash("JumpLand");
-        
         public static readonly int Dodge = Animator.StringToHash("Dodge");
 
+        // 移動アニメーションパラメータ
+        private static readonly int MoveX = Animator.StringToHash("MoveX");
+        private static readonly int MoveY = Animator.StringToHash("MoveY");
         private static readonly float walkThrethod = 0.4f;
         private static readonly float runThrethod = 0.8f;
         private static readonly float moveValueChangeSpeed = 5f;
         private Vector2 moveValue = Vector2.zero;
         private Vector2 moveValueGoal = Vector2.zero;
+        private MoveStatus moveStatus = MoveStatus.Idle;
 
         private readonly Dictionary<string, int> runtimeStringToHashCache = new Dictionary<string, int>();
 
@@ -57,6 +56,8 @@ namespace Project.ActionGame
         {
             currentState = Idle;
             moveValue = Vector2.zero;
+            moveValueGoal = Vector2.zero;
+            moveStatus = MoveStatus.Idle;
         }
 
         private string GetAttackAnimationName(PlayerAttackData attackData) => $"Attack{attackData.Label}";
@@ -70,17 +71,17 @@ namespace Project.ActionGame
             return info.normalizedTime >= 1;
         }
 
-        public void CrossFadeTo(string animationName, float transitionDuration = 0.2f)
+        public void CrossFadeTo(string animationName, float transitionDuration = 0.2f, bool isReplayAnimation = false)
         {
             if (!runtimeStringToHashCache.ContainsKey(animationName))
             {
                 runtimeStringToHashCache.Add(animationName, Animator.StringToHash(animationName));
             }
             int state = runtimeStringToHashCache[animationName];
-            CrossFadeTo(state, transitionDuration);
+            CrossFadeTo(state, transitionDuration, isReplayAnimation);
         }
         
-        public void CrossFadeTo(int stateHash, float transitionDuration = 0.2f)
+        public void CrossFadeTo(int stateHash, float transitionDuration = 0.2f, bool isReplayAnimation = false)
         {
             // 連続再生アニメーション中断判定
             if (isPlayingAnimationList)
@@ -105,8 +106,15 @@ namespace Project.ActionGame
                     return;
                 }
             }
-            
-            if (currentState == stateHash) return;
+
+            if (currentState == stateHash)
+            {
+                if (isReplayAnimation)
+                {
+                    playerAnimator.Play(stateHash, 0, 0);
+                }
+                return;
+            }
             currentState = stateHash;
             playerAnimator.CrossFadeInFixedTime(stateHash, transitionDuration);
         }
@@ -147,49 +155,69 @@ namespace Project.ActionGame
             switch (status)
             {
                 case MoveStatus.Dash:
-                    moveValueGoal = Vector2.one;
                     CrossFadeTo(Dash);
                     break;
                 case MoveStatus.Idle:
-                    moveValueGoal = Vector2.zero;
-                    CrossFadeTo(IdleAndMove);
+                    CrossFadeTo(Idle);
                     break;
+                case MoveStatus.Run:
+                    if (moveStatus != status)
+                    {
+                        SetMoveValueImmediately(status, moveDirection);
+                    }
+                    else
+                    {
+                        SetMoveValueGoal(status, moveDirection);
+                    }
+                    CrossFadeTo(Run);
+                    break;
+                case MoveStatus.Walk:
+                    if (moveStatus != status)
+                    {
+                        SetMoveValueImmediately(status, moveDirection);
+                    }
+                    else
+                    {
+                        SetMoveValueGoal(status, moveDirection);
+                    }
+                    CrossFadeTo(Walk);
+                    break;
+            }
+        }
+
+        private void SetMoveValueGoal(MoveStatus status, Vector2 moveDirection)
+        {
+            switch (status)
+            {
                 case MoveStatus.Run:
                     moveValueGoal.x = runThrethod * moveDirection.x;
                     moveValueGoal.y = runThrethod * moveDirection.y;
-                    CrossFadeTo(IdleAndMove);
                     break;
                 case MoveStatus.Walk:
                     moveValueGoal.x = walkThrethod * moveDirection.x;
                     moveValueGoal.y = walkThrethod * moveDirection.y;
-                    CrossFadeTo(IdleAndMove);
                     break;
             }
+            
+            moveStatus = status;
         }
-        
-        public void PlayJumpReady()
+
+        public void SetMoveValueImmediately(MoveStatus status, Vector2 moveDirection)
         {
-            CrossFadeTo(JumpReady);
-        }
-        
-        public void PlayJumpUp()
-        {
-            CrossFadeTo(JumpUp);
+            SetMoveValueGoal(status, moveDirection);
+            moveValue = moveValueGoal;
+            playerAnimator.SetFloat(MoveX, moveValue.x);
+            playerAnimator.SetFloat(MoveY, moveValue.y);
         }
         
         public void PlayJumpIdle()
         {
             CrossFadeTo(JumpIdle, 0.2f);
         }
-        
-        public void PlayJumpLand()
-        {
-            CrossFadeTo(JumpLand);
-        }
 
         public void PlayDodge()
         {
-            CrossFadeTo(Dodge);
+            CrossFadeTo(Dodge, isReplayAnimation:true);
         }
 
         public void PlayAttack(PlayerAttackData attackData)
@@ -208,6 +236,9 @@ namespace Project.ActionGame
             }, goalValue, 1f);
         }
 
+        /// <summary>
+        /// Update
+        /// </summary>
         private void Update()
         {
             moveValue.x = Mathf.Lerp(moveValue.x, moveValueGoal.x, moveValueChangeSpeed * Time.deltaTime);

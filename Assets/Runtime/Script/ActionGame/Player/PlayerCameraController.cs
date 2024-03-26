@@ -20,6 +20,7 @@ namespace Project.ActionGame
         [SerializeField] private CinemachineVirtualCamera lockOnLook;
         [SerializeField] private ColliderTriggerObjectContainer lockOnTargetContainer;
         [SerializeField] private Transform playerTransform;
+        [SerializeField] private GameObject lockOnSprite;
 
         private GameObject lockOnTarget = null;
         public bool IsLockOn => lockOnTarget != null;
@@ -31,6 +32,10 @@ namespace Project.ActionGame
                 if (lockOnTargetContainer.List.Count == 0) return;
                 lockOnTarget = lockOnTargetContainer.List.OrderBy(element => Vector3.SqrMagnitude(element.transform.position - playerTransform.position)).First();
                 lockOnLook.LookAt = lockOnTarget.transform;
+                lockOnSprite.transform.SetParent(lockOnTarget.transform);
+                lockOnSprite.transform.localPosition = Vector3.zero;
+                lockOnSprite.transform.rotation = Quaternion.identity;
+                lockOnSprite.SetActive(true);
             }
             else
             {
@@ -74,6 +79,8 @@ namespace Project.ActionGame
             lockOnTarget = null;
             lockOnLook.LookAt = null;
             freeLock.m_XAxis.Value = cameraTransform.transform.localEulerAngles.y;
+            lockOnSprite.SetActive(false);
+            lockOnSprite.transform.SetParent(cameraTransform);
         }
 
         private void SetCameraLook()

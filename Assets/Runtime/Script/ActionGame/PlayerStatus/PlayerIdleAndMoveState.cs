@@ -26,19 +26,24 @@ namespace Project.ActionGame
             playerController.ResetInputVectorFromCamera();
             isMoveToJump = false;
             moveToJumpTime = 0;
+            moveStatus = playerController.GetMoveStatusByInputVector();
+            animationController.SetMoveValueImmediately(moveStatus,
+                cameraController.IsLockOn? playerController.InputVector.normalized : Vector2.up);
         }
 
         public override PlayerState FixedUpdate()
         {
             if (isMoveToJump) return PlayerState.None;
-            moveStatus = playerController.Move();
-            animationController.PlayMove(moveStatus, 
-                cameraController.IsLockOn? playerController.InputVector.normalized : Vector2.up);
+            moveStatus = playerController.GetMoveStatusByInputVector();
+            playerController.Move(moveStatus);
             return PlayerState.None;
         }
 
         public override PlayerState Update()
         {
+            animationController.PlayMove(moveStatus, 
+                cameraController.IsLockOn? playerController.InputVector.normalized : Vector2.up);
+            
             // ジャンプ準備が終わったら、ジャンプに遷移
             if (isMoveToJump)
             {
