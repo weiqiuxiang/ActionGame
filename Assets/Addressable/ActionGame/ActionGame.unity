@@ -4193,7 +4193,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 449
+    m_Bits: 1473
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -4675,7 +4675,7 @@ GameObject:
   - component: {fileID: 1685521241}
   - component: {fileID: 1685521240}
   - component: {fileID: 1685521239}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
