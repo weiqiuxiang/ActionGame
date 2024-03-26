@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Project.ActionGame
@@ -6,6 +7,8 @@ namespace Project.ActionGame
     [Serializable]
     public class PlayerAttackData
     {
+        [SerializeField] private string label;
+        public string Label => label;
         [SerializeField] private float second;  // 持続時間
         public float Second => second;
         [SerializeField] private float moveSpeed;   // 攻撃時移動速度
@@ -31,5 +34,15 @@ namespace Project.ActionGame
         
         [SerializeField] private PlayerAttackData[] attackData;
         public PlayerAttackData[] AttackData => attackData;
+
+        [SerializeField] private int[] comboRoute;  // コンボルート(intはattackDataのindex)
+        public int[] ComboRoute => comboRoute;
+
+        public PlayerAttackData GetAttackDataByComboRouteIndex(int index)
+        {
+            return attackData[comboRoute[index]];
+        }
+
+        public PlayerAttackData GetDodgeAttackData() => attackData.FirstOrDefault(data => data.Label == "Dodge");
     }
 }

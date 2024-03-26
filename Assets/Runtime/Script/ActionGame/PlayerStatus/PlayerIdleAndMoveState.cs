@@ -32,14 +32,8 @@ namespace Project.ActionGame
         {
             if (isMoveToJump) return PlayerState.None;
             moveStatus = playerController.Move();
-            if (moveStatus == MoveStatus.NoMove)
-            {
-                animationController.PlayIdle();
-            }
-            else
-            {
-                animationController.PlayMove(moveStatus);
-            }
+            animationController.PlayMove(moveStatus, 
+                cameraController.IsLockOn? playerController.InputVector.normalized : Vector2.up);
             return PlayerState.None;
         }
 
@@ -90,7 +84,8 @@ namespace Project.ActionGame
             // 攻撃
             if (playerController.IsInputAttack)
             {
-                NextStateData.forward = playerController.GetInputForward();
+                NextStateData.forward = cameraController.IsLockOn? 
+                    cameraController.VectorToTarget(true).normalized : playerController.GetInputForward();
                 return PlayerState.Attack; 
             }
 

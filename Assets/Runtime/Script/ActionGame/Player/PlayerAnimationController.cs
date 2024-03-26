@@ -24,6 +24,9 @@ namespace Project.ActionGame
         public static readonly int Walk = Animator.StringToHash("Walk");
         public static readonly int Run = Animator.StringToHash("Run");
         public static readonly int Dash = Animator.StringToHash("Dash");
+        public static readonly int IdleAndMove = Animator.StringToHash("IdleAndMove");
+        public static readonly int MoveX = Animator.StringToHash("MoveX");
+        public static readonly int MoveY = Animator.StringToHash("MoveY");
         
         public static readonly int JumpReady = Animator.StringToHash("JumpReady");
         public static readonly int JumpUp = Animator.StringToHash("JumpUp");
@@ -32,8 +35,13 @@ namespace Project.ActionGame
         
         public static readonly int Dodge = Animator.StringToHash("Dodge");
 
-        private static readonly int MaxAttackStateHashes = 10;   // 攻撃ハッシュ配列の最大数
-        private int[] attackStateHashes;
+        private static readonly float walkThrethod = 0.4f;
+        private static readonly float runThrethod = 0.8f;
+        private static readonly float moveValueChangeSpeed = 5f;
+        private Vector2 moveValue = Vector2.zero;
+        private Vector2 moveValueGoal = Vector2.zero;
+
+        private readonly Dictionary<string, int> runtimeStringToHashCache = new Dictionary<string, int>();
 
         private int currentState = 0;
         private bool isPlayingAnimationList = false;
@@ -48,13 +56,10 @@ namespace Project.ActionGame
         public void Initialize()
         {
             currentState = Idle;
-            
-            attackStateHashes = new int[MaxAttackStateHashes];
-            for (int i = 0; i < attackStateHashes.Length; i++)
-            {
-                attackStateHashes[i] = Animator.StringToHash($"Attack{i:D2}");
-            }
+            moveValue = Vector2.zero;
         }
+
+        private string GetAttackAnimationName(PlayerAttackData attackData) => $"Attack{attackData.Label}";
         
         public bool IsState(int stateHash) => currentState == stateHash;
         public bool IsAnimationFinish(int stateHash)
@@ -65,6 +70,16 @@ namespace Project.ActionGame
             return info.normalizedTime >= 1;
         }
 
+        public void CrossFadeTo(string animationName, float transitionDuration = 0.2f)
+        {
+            if (!runtimeStringToHashCache.ContainsKey(animationName))
+            {
+                runtimeStringToHashCache.Add(animationName, Animator.StringToHash(animationName));
+            }
+            int state = runtimeStringToHashCache[animationName];
+            CrossFadeTo(state, transitionDuration);
+        }
+        
         public void CrossFadeTo(int stateHash, float transitionDuration = 0.2f)
         {
             // 連続再生アニメーション中断判定
@@ -127,26 +142,29 @@ namespace Project.ActionGame
             isPlayingAnimationList = false;
         }
 
-        public void PlayIdle()
+        public void PlayMove(MoveStatus status, Vector2 moveDirection)
         {
-            CrossFadeTo(Idle, 0.4f);
-        }
-
-        public void PlayMove(MoveStatus moveStatus)
-        {
-            if (moveStatus == MoveStatus.Dash)
+            switch (status)
             {
-                CrossFadeTo(Dash);
-                return;
+                case MoveStatus.Dash:
+                    moveValueGoal = Vector2.one;
+                    CrossFadeTo(Dash);
+                    break;
+                case MoveStatus.Idle:
+                    moveValueGoal = Vector2.zero;
+                    CrossFadeTo(IdleAndMove);
+                    break;
+                case MoveStatus.Run:
+                    moveValueGoal.x = runThrethod * moveDirection.x;
+                    moveValueGoal.y = runThrethod * moveDirection.y;
+                    CrossFadeTo(IdleAndMove);
+                    break;
+                case MoveStatus.Walk:
+                    moveValueGoal.x = walkThrethod * moveDirection.x;
+                    moveValueGoal.y = walkThrethod * moveDirection.y;
+                    CrossFadeTo(IdleAndMove);
+                    break;
             }
-
-            if (moveStatus == MoveStatus.Run)
-            {
-                CrossFadeTo(Run);
-                return;
-            }
-            
-            CrossFadeTo(Walk);
         }
         
         public void PlayJumpReady()
@@ -174,9 +192,9 @@ namespace Project.ActionGame
             CrossFadeTo(Dodge);
         }
 
-        public void PlayAttack(int attackType)
+        public void PlayAttack(PlayerAttackData attackData)
         {
-            CrossFadeTo(attackStateHashes[attackType]);
+            CrossFadeTo(GetAttackAnimationName(attackData));
         }
 
         public void SetHoldWeaponLayerWeight(float goalValue)
@@ -188,6 +206,14 @@ namespace Project.ActionGame
                 currentValue = value;
                 playerAnimator.SetLayerWeight(HoldWeaponLayerIndex, currentValue);
             }, goalValue, 1f);
+        }
+
+        private void Update()
+        {
+            moveValue.x = Mathf.Lerp(moveValue.x, moveValueGoal.x, moveValueChangeSpeed * Time.deltaTime);
+            moveValue.y = Mathf.Lerp(moveValue.y, moveValueGoal.y, moveValueChangeSpeed * Time.deltaTime);
+            playerAnimator.SetFloat(MoveX, moveValue.x);
+            playerAnimator.SetFloat(MoveY, moveValue.y);
         }
 
         private void OnDestroy()

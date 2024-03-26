@@ -6,8 +6,8 @@ namespace Project.ActionGame
 {
     public class PlayerAttackState : PlayerStateBase
     {
-        private int attackType = 0;
-        private int attackTypeMax = 0;
+        private int comboIndex = 0;
+        private int comboIndexMax = 0;
         private bool isToDodge = false;
         private bool isToNextAttack = false;
         private Vector3 attackForward;
@@ -16,6 +16,7 @@ namespace Project.ActionGame
         private float currentSecond;
         private float currentSecondCount;
         private float timePercent;
+        private PlayerAttackData currentAttackData;
 
         public PlayerAttackState(PlayerController playerController) : base(playerController)
         {
@@ -25,12 +26,16 @@ namespace Project.ActionGame
         {
             attackForward = receiveData.forward;
             
-            attackType = 0;
-            attackTypeMax = playerController.PlayerAttackSettings.AttackData.Length;
+            comboIndex = 0;
+            comboIndexMax = playerController.PlayerAttackSettings.ComboRoute.Length - 1;
+            currentAttackData = previousState == PlayerState.Dodge?
+                playerController.PlayerAttackSettings.GetDodgeAttackData() : 
+                playerController.PlayerAttackSettings.GetAttackDataByComboRouteIndex(comboIndex);
+            
             ResetNextAction();
             SetTime();
             
-            animationController.PlayAttack(attackType);
+            animationController.PlayAttack(currentAttackData);
             animationController.SetHoldWeaponLayerWeight(0);
         }
 
@@ -41,7 +46,7 @@ namespace Project.ActionGame
 
         public override PlayerState FixedUpdate()
         {
-            playerController.Attack(attackType, timePercent, attackForward);
+            playerController.Attack(currentAttackData, timePercent, attackForward);
             return PlayerState.None;
         }
         
@@ -53,14 +58,15 @@ namespace Project.ActionGame
             
             if (timePercent >= 1)
             {
-                if (isToNextAttack && attackType != attackTypeMax)
+                if (isToNextAttack && comboIndex != comboIndexMax)
                 {
-                    attackType++;
+                    comboIndex++;
+                    currentAttackData = playerController.PlayerAttackSettings.GetAttackDataByComboRouteIndex(comboIndex);
                     attackForward = nextAttackForward;
                     ResetNextAction();
                     SetTime();
                     
-                    animationController.PlayAttack(attackType);
+                    animationController.PlayAttack(currentAttackData);
                 }
                 else
                 {
@@ -86,7 +92,7 @@ namespace Project.ActionGame
 
         private void UpdateNextAction()
         {
-            var data = playerController.PlayerAttackSettings.AttackData[attackType];
+            var data = currentAttackData;
             
             // 回避にキャンセルするかをチェック
             bool hasDodge = (timePercent <= data.StartCancelPercent || timePercent >= data.EndCancelPercent) && playerController.IsInputDodge;
@@ -101,7 +107,8 @@ namespace Project.ActionGame
             if (!isToNextAttack && hasAttack)
             {
                 isToNextAttack = true;
-                nextAttackForward = playerController.GetInputForward();
+                nextAttackForward = cameraController.IsLockOn? 
+                    cameraController.VectorToTarget(true).normalized : playerController.GetInputForward();
             }
         }
 
@@ -113,7 +120,7 @@ namespace Project.ActionGame
         
         private void SetTime()
         {
-            currentSecond = playerController.PlayerAttackSettings.AttackData[attackType].Second;
+            currentSecond = currentAttackData.Second;
             currentSecondCount = 0;
             timePercent = 0;
         }

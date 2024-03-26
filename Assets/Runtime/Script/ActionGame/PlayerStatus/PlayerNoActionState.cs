@@ -5,13 +5,13 @@ using UnityEngine;
 namespace Project.ActionGame
 {
     /// <summary>
-    /// 攻撃を受けた
+    /// 硬直状態
     /// </summary>
-    public class PlayerDamagedState : PlayerStateBase
+    public class PlayerNoActionState : PlayerStateBase
     {
         private float currentTime;
         
-        public PlayerDamagedState(PlayerController playerController) : base(playerController)
+        public PlayerNoActionState(PlayerController playerController) : base(playerController)
         {
         }
 

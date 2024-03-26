@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRotateSpeed: 12
   attackData:
-  - second: 0.7
+  - label: 00
+    second: 0.7
     moveSpeed: 2
     moveSpeedCurve:
       serializedVersion: 2
@@ -43,7 +44,8 @@ MonoBehaviour:
     startCancelPercent: 0.3
     endCancelPercent: 0.7
     toNextAttackPercent: 0.5
-  - second: 0.7
+  - label: 01
+    second: 0.7
     moveSpeed: 1.7
     moveSpeedCurve:
       serializedVersion: 2
@@ -81,7 +83,8 @@ MonoBehaviour:
     startCancelPercent: 0.3
     endCancelPercent: 0.7
     toNextAttackPercent: 0.5
-  - second: 0.5
+  - label: 02
+    second: 0.5
     moveSpeed: 3
     moveSpeedCurve:
       serializedVersion: 2
@@ -119,3 +122,43 @@ MonoBehaviour:
     startCancelPercent: 0.3
     endCancelPercent: 0.7
     toNextAttackPercent: 0.5
+  - label: Dodge
+    second: 0.5
+    moveSpeed: 3
+    moveSpeedCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: -0.20613648
+        outSlope: -0.20613648
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.18306245
+      - serializedVersion: 3
+        time: 0.5
+        value: 1.0007875
+        inSlope: -0.26302433
+        outSlope: -0.26302433
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.11976051
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    startCancelPercent: 0.3
+    endCancelPercent: 0.7
+    toNextAttackPercent: 0.5
+  comboRoute: 000000000100000002000000

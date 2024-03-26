@@ -52,9 +52,11 @@ namespace Project.ActionGame
             }
 
             // 攻撃
-            if (playerController.IsInputAttack)
+            if (playerController.IsInputAttack && currentTime >= playerController.PlayerSettings.DodgeSecond * playerController.PlayerSettings.DodgeToAttackTimeRate)
             {
-                //return PlayerStatus.Attack; 
+                NextStateData.forward = cameraController.IsLockOn? 
+                    cameraController.VectorToTarget(true).normalized : playerController.GetInputForward();
+                return PlayerState.Attack; 
             }
 
             return PlayerState.None;

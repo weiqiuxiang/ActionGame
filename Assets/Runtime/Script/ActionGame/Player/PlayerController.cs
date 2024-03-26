@@ -37,6 +37,7 @@ namespace Project.ActionGame
         private InputController inputController;
         
         private Vector2 inputVector = Vector2.zero;  // 入力ベクトル
+        public Vector2 InputVector => inputVector;
         private Vector3 inputVectorFromCamera = Vector3.zero;  // カメラに対する入力方向
         private float moveSpeed = 0;
         private bool HasNoInput => inputVector.magnitude < playerSettings.MoveInputDeadZone;
@@ -99,6 +100,7 @@ namespace Project.ActionGame
         public void ResetDodgeInput() => IsInputDodge = false;
         
         public PlayerAnimationController GetAnimationController() => animationController;
+        public PlayerCameraController GetCameraController() => cameraController;
 
         private void InitializeInput()
         {
@@ -171,9 +173,12 @@ namespace Project.ActionGame
             }
             
             rigidbody.velocity = new Vector3(moveSpeed * inputVectorFromCamera.x, fallSpeed, moveSpeed * inputVectorFromCamera.z);
-            RotateCharacter(inputVectorFromCamera, playerSettings.RotateSpeed);
+            bool isDash = !isNoMove && IsInputDash;
+            
+            RotateCharacter(cameraController.IsLockOn && !isDash? 
+                cameraController.VectorToTarget(true).normalized : inputVectorFromCamera, playerSettings.RotateSpeed);
 
-            if (!isNoMove && IsInputDash)
+            if (isDash)
             {
                 return MoveStatus.Dash;
             }
@@ -183,7 +188,7 @@ namespace Project.ActionGame
                 return MoveStatus.Run;
             }
 
-            return isNoMove ? MoveStatus.NoMove : MoveStatus.Walk;
+            return isNoMove ? MoveStatus.Idle : MoveStatus.Walk;
         }
 
         /// <summary>
@@ -236,13 +241,13 @@ namespace Project.ActionGame
         /// 攻撃
         /// *毎フレーム更新
         /// </summary>
-        /// <param name="attackType"></param>
+        /// <param name="playerAttackData"></param>
         /// <param name="percent"></param>
         /// <param name="forward"></param>
         /// <returns></returns>
-        public void Attack(int attackType, float percent, Vector3 forward)
+        public void Attack(PlayerAttackData playerAttackData, float percent, Vector3 forward)
         {
-            PlayerAttackData data = playerAttackSettings.AttackData[attackType];
+            PlayerAttackData data = playerAttackData;
             
             moveSpeed = Mathf.Max(0.0001f, data.MoveSpeedCurve.Evaluate(percent) * data.MoveSpeed);   // 速度は0にならないように、最小でも一定値以上
             rigidbody.velocity = new Vector3(moveSpeed * forward.x, fallSpeed, moveSpeed * forward.z);

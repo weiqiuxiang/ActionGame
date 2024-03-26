@@ -14,10 +14,12 @@ namespace Project.ActionGame
     public class PlayerStateData
     {
         public Vector3 forward;
+        public float second;
 
         public void Reset()
         {
             forward = Vector3.zero;
+            second = 0;
         }
     }
     
@@ -28,12 +30,14 @@ namespace Project.ActionGame
     {
         protected readonly PlayerController playerController;
         protected readonly PlayerAnimationController animationController;
+        protected readonly PlayerCameraController cameraController;
         public PlayerStateData NextStateData { get; }
 
         public PlayerStateBase(PlayerController playerController)
         {
             this.playerController = playerController;
             animationController = playerController.GetAnimationController();
+            cameraController = playerController.GetCameraController();
             NextStateData = new PlayerStateData();
         }
 

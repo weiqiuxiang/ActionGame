@@ -47,6 +47,9 @@ namespace Project.ActionGame
         [SerializeField] private float dodgeDragSpeed; // 回避中、入力方向に向く速度
         public float DodgeDragSpeed => dodgeDragSpeed;
 
+        [Range(0.1f, 1f)][SerializeField] private float dodgeToAttackTimeRate;  // 回避から攻撃にキャンセルできる時間割合
+        public float DodgeToAttackTimeRate => dodgeToAttackTimeRate;
+
         [SerializeField] private float jumpHeight;  //  ジャンプ高さ
         public float JumpHeight => jumpHeight;
         

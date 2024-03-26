@@ -40,6 +40,24 @@ namespace Project.ActionGame
             SetCameraLook();
         }
 
+        public Vector3 VectorToTarget(bool isYZero = false)
+        {
+            if (!IsLockOn)
+            {
+                Debug.LogWarning("ロックオンする相手はない。このメソッドを呼び出すべきではない");
+                return Vector3.zero;
+            }
+            else
+            {
+                Vector3 vector = lockOnTarget.transform.position - playerTransform.position;
+                if (isYZero)
+                {
+                    vector.y = 0;
+                }
+                return vector;
+            }
+        }
+
         public void CheckLockOnRelease()
         {
             if (!IsLockOn) return;

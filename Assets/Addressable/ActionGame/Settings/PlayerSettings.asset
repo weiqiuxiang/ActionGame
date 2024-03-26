@@ -19,7 +19,7 @@ MonoBehaviour:
   dashSpeed: 5
   fallStartSpeed: 1
   walkInputThreshold: 0.7
-  dodgeSpeed: 12
+  dodgeSpeed: 7
   dodgeSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -43,19 +43,20 @@ MonoBehaviour:
       outWeight: 0.17147645
     - serializedVersion: 3
       time: 1
-      value: -0.0000017993152
-      inSlope: -0.3133702
-      outSlope: -0.3133702
+      value: 0.06367758
+      inSlope: -2.8336651
+      outSlope: -2.8336651
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.07149317
+      inWeight: 0.06897752
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  dodgeSecond: 0.5
+  dodgeSecond: 1
   dodgeInvincibleSecond: 1
   dodgeDragSpeed: 0.5
+  dodgeToAttackTimeRate: 0.605
   jumpHeight: 2
   jumpRotateSpeed: 16
   airMoveAcc: 3
