@@ -1,34 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Project.ActionGame
 {
-    public class PlayerInAirStatus : PlayerStatusBase
+    public class PlayerInAirState : PlayerStateBase
     {
-        public PlayerInAirStatus(PlayerController playerController) : base(playerController)
+        private Vector3 airForward; // 空中向き
+        
+        public PlayerInAirState(PlayerController playerController) : base(playerController)
         {
         }
 
-        public override void InStatus(PlayerStatus lastStatus)
+        public override void InStatus(PlayerState previousState, PlayerStateData receiveData)
         {
-            
+            airForward = receiveData.forward;
         }
 
-        public override PlayerStatus FixedUpdate()
+        public override PlayerState FixedUpdate()
         {
-            playerController.AirMove();
-            return PlayerStatus.None;
+            playerController.AirMove(airForward);
+            return PlayerState.None;
         }
 
-        public override PlayerStatus Update()
+        public override PlayerState Update()
         {
             if (playerController.IsOnGround)
             {
-                playerController.AnimationController.PlayLandGround();
-                return PlayerStatus.IdleAndMove;
+                animationController.PlayAnimationList(new []{PlayerAnimationController.JumpLand}, 
+                    new []{PlayerAnimationController.Idle}, true);
+                return PlayerState.IdleAndMove;
             }
-            return PlayerStatus.None;
+            return PlayerState.None;
         }
     }
 }

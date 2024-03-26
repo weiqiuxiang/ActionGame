@@ -1,62 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Project.ActionGame
 {
-    public class PlayerDodgeState : PlayerStatusBase
+    public class PlayerDodgeState : PlayerStateBase
     {
         private float currentTime;
+        private Vector3 dodgeForward;
         
         public PlayerDodgeState(PlayerController playerController) : base(playerController)
         {
         }
         
-        public override void InStatus(PlayerStatus lastStatus)
+        public override void InStatus(PlayerState previousState, PlayerStateData receiveData)
         {
-            currentTime = 0;
-            playerController.ResetPlayerForward();
-        }
-
-        public override void OutStatus()
-        {
+            dodgeForward = receiveData.forward;
             
+            currentTime = 0;
+            playerController.PlayerForwardEqualInputVectorFromCamera();
+            animationController.PlayDodge();
         }
 
-        public override PlayerStatus FixedUpdate()
+        public override PlayerState FixedUpdate()
+        {
+            dodgeForward = playerController.Dodge(currentTime, dodgeForward);
+            return PlayerState.None;
+        }
+
+        public override PlayerState Update()
         {
             currentTime += Time.deltaTime;
-            playerController.Dodge(currentTime);
-            return PlayerStatus.None;
-        }
-
-        public override PlayerStatus Update()
-        {
+            
             if (!playerController.IsOnGround)
             {
-                playerController.AnimationController.PlayInAir();
-                playerController.ResetAirForward();
-                return PlayerStatus.InAir;
+                animationController.PlayJumpIdle();
+                NextStateData.forward = playerController.GetPlayerForward();
+                return PlayerState.InAir;
             }
 
             if (currentTime >= playerController.PlayerSettings.DodgeSecond)
             {
-                return PlayerStatus.IdleAndMove;
+                return PlayerState.IdleAndMove;
             }
 
             // ダメージ受け
             if (playerController.IsDamaged)
             {
-                return PlayerStatus.Damaged;
+                return PlayerState.Damaged;
             }
 
             // 攻撃
-            if (playerController.IsInputAttack)
+            if (playerController.IsInputAttack && currentTime >= playerController.PlayerSettings.DodgeSecond * playerController.PlayerSettings.DodgeToAttackTimeRate)
             {
-                //return PlayerStatus.Attack; 
+                NextStateData.forward = cameraController.IsLockOn? 
+                    cameraController.VectorToTarget(true).normalized : playerController.GetInputForward();
+                return PlayerState.Attack; 
             }
 
-            return PlayerStatus.None;
+            return PlayerState.None;
         }
     }
 }

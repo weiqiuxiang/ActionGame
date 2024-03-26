@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Project.ActionGame
@@ -5,7 +6,7 @@ namespace Project.ActionGame
     /// <summary>
     /// 地面にいる時の動き、移動、ダッシュなどをコントロール
     /// </summary>
-    public class PlayerIdleAndMoveState : PlayerStatusBase
+    public class PlayerIdleAndMoveState : PlayerStateBase
     {
         /// <summary>
         /// ジャンプは準備動作はあるので、準備動作後ジャンプに遷移
@@ -20,81 +21,80 @@ namespace Project.ActionGame
         {
         }
 
-        public override void InStatus(PlayerStatus lastStatus)
+        public override void InStatus(PlayerState previousState, PlayerStateData receiveData)
         {
             playerController.ResetInputVectorFromCamera();
             isMoveToJump = false;
             moveToJumpTime = 0;
+            moveStatus = playerController.GetMoveStatusByInputVector();
+            animationController.SetMoveValueImmediately(moveStatus,
+                cameraController.IsLockOn? playerController.InputVector.normalized : Vector2.up);
         }
 
-        public override void OutStatus()
+        public override PlayerState FixedUpdate()
         {
+            if (isMoveToJump) return PlayerState.None;
+            moveStatus = playerController.GetMoveStatusByInputVector();
+            playerController.Move(moveStatus);
+            return PlayerState.None;
+        }
+
+        public override PlayerState Update()
+        {
+            animationController.PlayMove(moveStatus, 
+                cameraController.IsLockOn? playerController.InputVector.normalized : Vector2.up);
             
-        }
-
-        public override PlayerStatus FixedUpdate()
-        {
-            if (isMoveToJump) return PlayerStatus.None;
-            moveStatus = playerController.Move();
-            if (moveStatus == MoveStatus.NoMove)
-            {
-                playerController.AnimationController.PlayIdle();
-            }
-            else
-            {
-                playerController.AnimationController.PlayMove(moveStatus);
-            }
-            return PlayerStatus.None;
-        }
-
-        public override PlayerStatus Update()
-        {
             // ジャンプ準備が終わったら、ジャンプに遷移
             if (isMoveToJump)
             {
                 moveToJumpTime += Time.deltaTime;
                 if (moveToJumpTime >= moveToJumpSecond)
                 {
-                    playerController.Jump(playerController.PlayerSettings.GetMoveSpeed(moveStatus));
-                    return PlayerStatus.InAir;
+                    playerController.JumpStart(playerController.PlayerSettings.GetMoveSpeed(moveStatus), NextStateData.forward);
+                    return PlayerState.InAir;
                 }
-                return PlayerStatus.None;
+                return PlayerState.None;
             }
             
             if (playerController.IsInputJump)
             {
                 isMoveToJump = true;
-                playerController.JumpReady();
-                playerController.AnimationController.PlayJump();
-                return PlayerStatus.None;
+                NextStateData.forward = playerController.JumpReady();
+                animationController.PlayAnimationList(
+                    new []{PlayerAnimationController.JumpReady, PlayerAnimationController.JumpUp, PlayerAnimationController.JumpIdle}, 
+                    new []{PlayerAnimationController.JumpLand});
+                return PlayerState.None;
             }
 
             if (!playerController.IsOnGround)
             {
-                playerController.AnimationController.PlayInAir();
-                playerController.ResetAirForward();
-                return PlayerStatus.InAir;
+                animationController.PlayJumpIdle();
+                NextStateData.forward = playerController.GetPlayerForward();
+                return PlayerState.InAir;
             }
 
             // ダメージ受け
             if (playerController.IsDamaged)
             {
-                return PlayerStatus.Damaged;
+                return PlayerState.Damaged;
             }
 
             // 回避
             if (playerController.IsInputDodge)
             {
-                return PlayerStatus.Dodge;
+                NextStateData.forward = playerController.GetInputForward();
+                return PlayerState.Dodge;
             }
 
             // 攻撃
             if (playerController.IsInputAttack)
             {
-                //return PlayerStatus.Attack; 
+                NextStateData.forward = cameraController.IsLockOn? 
+                    cameraController.VectorToTarget(true).normalized : playerController.GetInputForward();
+                return PlayerState.Attack; 
             }
 
-            return PlayerStatus.None;
+            return PlayerState.None;
         }
     }
 }

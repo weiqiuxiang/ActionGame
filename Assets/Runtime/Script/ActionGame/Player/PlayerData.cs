@@ -28,18 +28,18 @@ namespace Project.ActionGame
     /// </summary>
     public class PlayerStatusData
     {
-        public PlayerStatus CurrentStatus { get; private set; }     
+        public PlayerState CurrentState { get; private set; }     
         public bool IsGround { get; private set; }  // 着地か？
 
         public void Initialize()
         {
             IsGround = false;
-            CurrentStatus = PlayerStatus.IdleAndMove;
+            CurrentState = PlayerState.IdleAndMove;
         }
 
-        public void SetStatus(PlayerStatus status)
+        public void SetStatus(PlayerState state)
         {
-            CurrentStatus = status;
+            CurrentState = state;
         }
         
         public void SetIsGround(bool value)

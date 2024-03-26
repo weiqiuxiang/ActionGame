@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Project.ActionGame;
 using UnityEngine;
 
-namespace Project
+namespace Project.ActionGame
 {
     /// <summary>
     /// プレイヤーの設定データ
@@ -44,8 +44,11 @@ namespace Project
         [SerializeField] private float dodgeInvincibleSecond;   // 回避無敵時間
         public float DodgeInvincibleSecond => dodgeInvincibleSecond;
         
-        [SerializeField] private float dodgeRotateSpeed; // 回避時の回転速度(秒)、Time.deltaTimeと一緒に使う想定
-        public float DodgeRotateSpeed => dodgeRotateSpeed;
+        [SerializeField] private float dodgeDragSpeed; // 回避中、入力方向に向く速度
+        public float DodgeDragSpeed => dodgeDragSpeed;
+
+        [Range(0.1f, 1f)][SerializeField] private float dodgeToAttackTimeRate;  // 回避から攻撃にキャンセルできる時間割合
+        public float DodgeToAttackTimeRate => dodgeToAttackTimeRate;
 
         [SerializeField] private float jumpHeight;  //  ジャンプ高さ
         public float JumpHeight => jumpHeight;
